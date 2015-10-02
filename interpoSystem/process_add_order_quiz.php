@@ -82,4 +82,10 @@ $dbc->close();
 
 include('includes/footer.html');
 ?>
+<script type="text/javascript">
+var user_id = <?php echo json_encode($userid); ?>;
+var role_id = <?php echo json_encode($roleid); ?>;
+document.getElementById("header-user-id").value = user_id;
+document.getElementById("header-role-id").value = role_id;
+</script>
 

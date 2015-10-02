@@ -2,6 +2,8 @@
 error_reporting(-1);
 ini_set('display_errors', 'off');
 include('includes/header.html');
+$userid = $_POST['userid'];
+$roleid = $_POST['roleid'];
 //Check for empty fields
 //Create short variables
 $question = $_POST['question'];
@@ -40,7 +42,7 @@ if($modified == 'edit'){
 	$result = $dbc->query($query_update);
 
 	if($result){
-	    echo "Information has been updated <br><a href='map.php'>Go Back</a>";
+	    echo "Information has been saved<br><a href='map.php?userID=".$userid."&roleID=".$roleid."'>Go Back</a>";
 	} else {
 	    echo '<h1>System Error</h1>';
 	}
@@ -49,7 +51,7 @@ if($modified == 'edit'){
 	$result = $dbc->query($query_delete);
 
 	if($result){
-	    echo "Information has been removed <br><a href='map.php'>Go Back</a>";
+	    echo "Information has been saved<br><a href='map.php?userID=".$userid."&roleID=".$roleid."'>Go Back</a>";
 	} else {
 	    echo '<h1>System Error</h1>';
 	}
@@ -58,3 +60,9 @@ if($modified == 'edit'){
 
 include('includes/footer.html');
 ?>
+<script type="text/javascript">
+var user_id = <?php echo json_encode($userid); ?>;
+var role_id = <?php echo json_encode($roleid); ?>;
+document.getElementById("header-user-id").value = user_id;
+document.getElementById("header-role-id").value = role_id;
+</script>

@@ -1,5 +1,14 @@
 <?php
 include('includes/header.html');
+if($userid == ''){
+    echo "User ID is invalid";
+    exit();
+}
+$roleid = $_GET['roleID'];
+if($roleid == ''){
+    echo "Role ID is invalid";
+    exit();
+}
 $type = ($_GET['type']);
 $questionid = ($_GET['id']);
 $edit = ($_GET['edit']);
@@ -45,7 +54,12 @@ if($type == 'single'){
 ?>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
+<script type="text/javascript">
+var user_id = <?php echo json_encode($userid); ?>;
+var role_id = <?php echo json_encode($roleid); ?>;
+document.getElementById("header-user-id").value = user_id;
+document.getElementById("header-role-id").value = role_id;
+</script>
 </head>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
@@ -91,6 +105,8 @@ if($type == 'single'){
             <button type="submit" class="btn btn-primary btn-large" value="submit" id="submit" name="submit"><?= $modified ?></button>
             <input type="hidden" name="hidden" id="hidden" value="<?= $edit ?>">
             <input type="hidden" id="questionid" name="questionid"value="<?= $questionid ?>">
+            <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
+            <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
         </form>
     </div>
      </div>

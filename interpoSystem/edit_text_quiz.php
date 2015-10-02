@@ -1,5 +1,6 @@
 <?php
 include('includes/header.html');
+$userid = $_GET['userID'];
 if($userid == ''){
     echo "User ID is invalid";
     exit();

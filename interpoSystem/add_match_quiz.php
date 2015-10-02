@@ -5,8 +5,21 @@ if($locatid == ''){
     echo "Location ID is invalid";
     exit();
 }
+$userid = $_GET['userID'];
+if($userid == ''){
+    echo "User ID is invalid";
+    exit();
+}
+$roleid = $_GET['roldID'];
+if($roleid == ''){
+    echo "Role ID is invalid";
+    exit();
+}
 ?>
-
+<script type="text/javascript">
+var user_id = <?php echo json_encode($userid); ?>;
+var role_id = <?php echo json_encode($roleid); ?>;
+</script>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
     <h1>Multi Choice Questions</h1>
@@ -48,6 +61,8 @@ if($locatid == ''){
                 <input type="text" class="form-control" id="image-url1" name="image-url1" placeholder="Enter image url here">
             </div>
             <input type="hidden" name="locatid" id="hidden" value="<?=$locatid ?>">
+            <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
+            <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
             <!--
             <div class="form-group">
                 <label class="sr-only" for="wrong_answer2">Wrong Answers 2</label>

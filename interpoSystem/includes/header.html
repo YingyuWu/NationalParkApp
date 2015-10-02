@@ -32,7 +32,7 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="map.php">Learn As You Go</a></li>
+            <li class="active"><a onclick="linkToMap(this)">Learn As You Go</a></li>
           <!--<li><a href="#">Show</a></li> 
             <li><a href="add_Description.php">Description and link</a></li>
             <li><a href="add_Text_quiz.php">Text Question</a></li>
@@ -43,8 +43,22 @@
             <li><a href="show_questions.php">Questions Management</a></li>-->
 
           </ul>
+          <input type="hidden" id="header-user-id" value="empty">
+          <input type="hidden" id="header-role-id" value="empty">
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
     <div class="container theme-showcase" role="main">
+
+    <script type="text/javascript">
+      function linkToMap(ele){
+        var userid = document.getElementById("header-user-id").value;
+        var roleid = document.getElementById("header-role-id").value;
+        if(userid == 'empty' || roleid == 'empty'){
+          return;
+        }
+        var url = "map.php?userID=" + userid + "&roleID=" + roleid;
+        window.location = url;
+      }
+    </script>

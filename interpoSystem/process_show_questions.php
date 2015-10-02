@@ -8,6 +8,7 @@ $check = ($_POST['check']);
 $locat_ID = ($_POST['locatID']);
 $extra = ($_POST['extra']);
 $role_id = ($_POST['roleID']);
+$user_id = ($_POST['userID']);
 $query = '';
 //connect to the database
 require_once('includes/db_conn.php');
@@ -88,12 +89,12 @@ if($type == 'text'){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = 'text' value='on' checked>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;
                     <input type='radio' class='text' id = '".$row['questionid']."'name='available".$count."' value='off'>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' href='edit_text_quiz.php?type=text&edit=edit&id=".$row['questionid']."' class='text' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
-                    <a name='".$row['questionid']."' class='text' id='delete-question' href='edit_text_quiz.php?type=text&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' href='edit_text_quiz.php?type=text&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' class='text' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a name='".$row['questionid']."' class='text' id='delete-question' href='edit_text_quiz.php?type=text&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else if($check == 0){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = 'text' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='text' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' class='text' href='edit_text_quiz.php?type=text&edit=edit&id=".$row['questionid']."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='text' href='edit_text_quiz.php?type=text&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' class='text' href='edit_text_quiz.php?type=text&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='text' href='edit_text_quiz.php?type=text&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else{
                     echo "Available is Not Set";
                     exit();
@@ -131,12 +132,12 @@ if($type == 'text'){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on' checked>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;
                     <input type='radio' class='".$type."' id = '".$row['questionid']."'name='available".$count."' value='off'>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' href='edit_fill_quiz.php?type=fill&edit=edit&id=".$row['questionid']."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
-                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_fill_quiz.php?type=fill&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' href='edit_fill_quiz.php?type=fill&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_fill_quiz.php?type=fill&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else if($check == 0){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='".$type."' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' class='".$type."' href='edit_fill_quiz.php?type=fill&edit=edit&id=".$row['questionid']."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_fill_quiz.php?type=fill&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' class='".$type."' href='edit_fill_quiz.php?type=fill&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_fill_quiz.php?type=fill&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
                 }else{
                     echo "Available is Not Set";
                     exit();
@@ -174,12 +175,13 @@ if($type == 'text'){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on' checked>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;
                     <input type='radio' class='".$type."' id = '".$row['questionid']."'name='available".$count."' value='off'>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' href='edit_single_quiz.php?type=single&edit=edit&id=".$row['questionid']."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
-                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_single_quiz.php?type=single&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' href='edit_single_quiz.php?type=single&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_single_quiz.php?type=single&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else if($check == 0){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='".$type."' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' class='".$type."' href='edit_single_quiz.php?type=single&edit=edit&id=".$row['questionid']."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_single_quiz.php?type=single&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' class='".$type."' href='edit_single_quiz.php?type=single&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_single_quiz.php?type=single&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else{
                     echo "Available is Not Set";
                     exit();
@@ -219,12 +221,13 @@ if($type == 'text'){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on' checked>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;
                     <input type='radio' class='".$type."' id = '".$row['questionid']."'name='available".$count."' value='off'>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' href='edit_order_quiz.php?type=order&edit=edit&id=".$row['questionid']."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
-                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_order_quiz.php?type=order&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' href='edit_order_quiz.php?type=order&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_order_quiz.php?type=order&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else if($check == 0){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='".$type."' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' class='".$type."' href='edit_order_quiz.php?type=order&edit=edit&id=".$row['questionid']."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_order_quiz.php?type=order&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' class='".$type."' href='edit_order_quiz.php?type=order&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_order_quiz.php?type=order&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else{
                     echo "Available is Not Set";
                     exit();
@@ -262,12 +265,13 @@ if($type == 'text'){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on' checked>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;
                     <input type='radio' class='".$type."' id = '".$row['questionid']."'name='available".$count."' value='off'>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' href='edit_multi_quiz.php?type=multi&edit=edit&id=".$row['questionid']."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
-                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_multi_quiz.php?type=multi&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' href='edit_multi_quiz.php?type=multi&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_multi_quiz.php?type=multi&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else if($check == 0){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='".$type."' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' class='".$type."' href='edit_multi_quiz.php?type=multi&edit=edit&id=".$row['questionid']."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_multi_quiz.php?type=multi&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' class='".$type."' href='edit_multi_quiz.php?type=multi&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_multi_quiz.php?type=multi&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else{
                     echo "Available is Not Set";
                     exit();
@@ -305,12 +309,13 @@ if($type == 'text'){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on' checked>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;
                     <input type='radio' class='".$type."' id = '".$row['questionid']."'name='available".$count."' value='off'>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' href='edit_fact_quiz.php?type=fact&edit=edit&id=".$row['questionid']."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
-                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_fact_quiz.php?type=fact&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' href='edit_fact_quiz.php?type=fact&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_fact_quiz.php?type=fact&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else if($check == 0){
                     echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='".$type."' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
-                    <td><a id='update-question' class='".$type."' href='edit_fact_quiz.php?type=fact&edit=edit&id=".$row['questionid']."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;<a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_fact_quiz.php?type=fact&edit=delete&id=".$row['questionid']."'>Delete</a></td></tr>";
+                    <td><a id='update-question' class='".$type."' href='edit_fact_quiz.php?type=fact&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_fact_quiz.php?type=fact&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else{
                     echo "Available is Not Set";
                     exit();

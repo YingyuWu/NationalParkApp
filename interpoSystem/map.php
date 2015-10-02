@@ -83,6 +83,8 @@ function initialize() {
   var role_id = <?php echo json_encode($roleid); ?>;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
+  document.getElementById("header-user-id").value = user_id;
+  document.getElementById("header-role-id").value = role_id;
 
   var myOptions = {
     zoom: 10,
@@ -250,24 +252,26 @@ function viewQuestions(ele){
 }
 function addQuestions(ele){
   var locatid = document.getElementById("locat-id").value;
+  var userid = document.getElementById("user-id").value;
+  var roleid = document.getElementById("role-id").value;
   if(locatid == '' || locatid == undefined){
     alert.log("location id error");
   }
   var url;
   if(ele.name == 'text'){
-    url = "add_Text_quiz.php?locatID=" + locatid;
+    url = "add_Text_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'fill'){
-    url = "add_fill_quiz.php?locatID=" + locatid;
+    url = "add_fill_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'order'){
-    url = "add_Order_quiz.php?locatID=" + locatid;
+    url = "add_Order_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'single'){
-    url = "add_single_quiz.php?locatID=" + locatid;
+    url = "add_single_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'multi'){
-    url = "add_multi_quiz.php?locatID=" + locatid;
+    url = "add_multi_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'fact'){
-  	url = "add_fact_quiz.php?locatID=" + locatid;
+  	url = "add_fact_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'match'){
-  	url = "add_match_quiz.php?locatID=" + locatid;
+  	url = "add_match_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }
   if(url == undefined || url == ""){
     return;

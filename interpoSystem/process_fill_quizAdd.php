@@ -3,7 +3,8 @@ include('includes/header.html');
 
 error_reporting(-1);
 ini_set('display_errors', 'off');
-
+$userid = $_POST['userid'];
+$roleid = $_POST['roleid'];
 
 //Create short variables]
 $question = ($_POST['question']);
@@ -31,7 +32,7 @@ $query = "INSERT INTO FillQuestions
 $result = $dbc->query($query);
 
 if($result){
-    echo "Information has been saved";
+    echo "Information has been saved<br><a href='map.php?userID=".$userid."&roleID=".$roleid."'>Go Back</a>";
 } else {
     echo '<h1>System Error</h1>';
 }

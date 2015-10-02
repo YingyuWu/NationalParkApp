@@ -5,7 +5,23 @@ if($locatid == ''){
     echo "Location ID is invalid";
     exit();
 }
+$userid = $_GET['userID'];
+if($userid == ''){
+    echo "User ID is invalid";
+    exit();
+}
+$roleid = $_GET['roleID'];
+if($roleid == ''){
+    echo "Role ID is invalid";
+    exit();
+}
 ?>
+<script type="text/javascript">
+var user_id = <?php echo json_encode($userid); ?>;
+var role_id = <?php echo json_encode($roleid); ?>;
+document.getElementById("header-user-id").value = user_id;
+document.getElementById("header-role-id").value = role_id;
+</script>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
         <h1>Add order question</h1>
@@ -70,6 +86,8 @@ if($locatid == ''){
                 <input type="text" class="form-control" id="link" name="link" placeholder="Enter url here">
             </div>
             <input type="hidden" name="locatid" id="hidden" value="<?=$locatid ?>">
+            <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
+            <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
             <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Information</button>
 
         </form>

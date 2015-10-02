@@ -10,7 +10,7 @@ if($userid == ''){
     echo "User ID is invalid";
     exit();
 }
-$roleid = $_GET['roldID'];
+$roleid = $_GET['roleID'];
 if($roleid == ''){
     echo "Role ID is invalid";
     exit();
@@ -19,6 +19,8 @@ if($roleid == ''){
 <script type="text/javascript">
 var user_id = <?php echo json_encode($userid); ?>;
 var role_id = <?php echo json_encode($roleid); ?>;
+document.getElementById("header-user-id").value = user_id;
+document.getElementById("header-role-id").value = role_id;
 </script>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">

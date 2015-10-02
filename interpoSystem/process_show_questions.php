@@ -33,6 +33,8 @@ if($check == 'update'){
         $table = 'multiQuestions';
     }else if($type == 'fact'){
         $table = 'factInformation';
+    }else if($type == 'match'){
+        $table = 'matchQuestions';
     }
 	if($table == ''){
 		echo "Table is Not Set UP";
@@ -316,6 +318,50 @@ if($type == 'text'){
                     id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='".$type."' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
                     <td><a id='update-question' class='".$type."' href='edit_fact_quiz.php?type=fact&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
                     <a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_fact_quiz.php?type=fact&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
+                }else{
+                    echo "Available is Not Set";
+                    exit();
+                }
+            }else if($role_id == '1'){//regular user
+               echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
+            } 
+            
+        }  
+    }else{
+        echo "<tr><td>No results matching</td></tr>";
+    }
+    echo "</table>";
+}else if($type == 'match'){
+    if($check == 'all' || $extra == 'all'){//extra control
+        $query = "SELECT questionid,question,available FROM `matchQuestions`";
+    }else{
+        $query = "SELECT questionid,question,available FROM `matchQuestions` WHERE Locat_ID='".$locat_ID."'";
+    }
+    $count = 0;
+    $result = $dbc->query($query);
+    if(!$result){
+        echo '<h1>System Error</h1>';
+        exit();
+    }
+    echo "<table id='query_result'>";
+    if($result->num_rows > 0){
+        //Fetch rows
+        echo $title;
+        while($row = $result->fetch_assoc()){
+            if($role_id == '0'){
+                $count++;
+                $check = $row['available'];
+                if($check ==  1){
+                    echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
+                    id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on' checked>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;
+                    <input type='radio' class='".$type."' id = '".$row['questionid']."'name='available".$count."' value='off'>&nbsp;&nbsp;Off</td>
+                    <td><a id='update-question' href='edit_match_quiz.php?type=match&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' class='".$type."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a name='".$row['questionid']."' class='".$type."' id='delete-question' href='edit_match_quiz.php?type=match&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
+                }else if($check == 0){
+                    echo "<tr><td>".$row['questionid']."</td><td>".$row['question']."</td><td><input type='radio' 
+                    id = '".$row['questionid']."' name='available".$count."' class = '".$type."' value='on'>&nbsp;&nbsp;On &nbsp;&nbsp;&nbsp;<input type='radio' class='".$type."' id = '".$row['questionid']."' name='available".$count."' value='off' checked>&nbsp;&nbsp;Off</td>
+                    <td><a id='update-question' class='".$type."' href='edit_match_quiz.php?type=match&edit=edit&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."' name='".$row['questionid']."'>Edit</a>&nbsp;&nbsp;
+                    <a id='update-question' name='".$row['questionid']."' class='".$type."' href='edit_match_quiz.php?type=match&edit=delete&id=".$row['questionid']."&userID=".$user_id."&roleID=".$role_id."'>Delete</a></td></tr>";
                 }else{
                     echo "Available is Not Set";
                     exit();

@@ -115,7 +115,8 @@ function initialize() {
   '<a style= "color: #7B7B7B;" id="question-type" name="single" href = "#" onclick="viewQuestions(this);return false;" > 3.Single Choice Questions</a>&nbsp;&nbsp;&nbsp;<a name="single" onclick="addQuestions(this);return false;">Add New</a><br/>'+
   '<a style= "color: #000000;" id="question-type" name="multi" href = "#" onclick="viewQuestions(this);return false;" > 4.Multiple Choice Questions</a>&nbsp;&nbsp;&nbsp;<a name="multi" onclick="addQuestions(this);return false;">Add New</a><br/>'+
   '<a style= "color: #7B7B7B;" id="question-type" name="order" href = "#" onclick="viewQuestions(this);return false;" > 5.Correct Order Questions</a>&nbsp;&nbsp;&nbsp;<a name="order" onclick="addQuestions(this);return false;"">Add New</a><br/>'+
-  '<a style= "color: #7B7B7B;" id="question-type" name="fact" href = "#" onclick="viewQuestions(this);return false;" > 6.Information</a>&nbsp;&nbsp;&nbsp;<a name="fact" onclick="addQuestions(this);return false;"">Add New</a><br/>';
+  '<a style= "color: #7B7B7B;" id="question-type" name="fact" href = "#" onclick="viewQuestions(this);return false;" > 6.Information</a>&nbsp;&nbsp;&nbsp;<a name="fact" onclick="addQuestions(this);return false;"">Add New</a><br/>'+
+  '<a style= "color: #7B7B7B;" id="question-type" name="match" href = "#" onclick="viewQuestions(this);return false;" > 6.Match Questions</a>&nbsp;&nbsp;&nbsp;<a name="match" onclick="addQuestions(this);return false;"">Add New</a><br/>';
 
 
 
@@ -265,6 +266,8 @@ function addQuestions(ele){
     url = "add_multi_quiz.php?locatID=" + locatid;
   }else if(ele.name == 'fact'){
   	url = "add_fact_quiz.php?locatID=" + locatid;
+  }else if(ele.name == 'match'){
+  	url = "add_match_quiz.php?locatID=" + locatid;
   }
   if(url == undefined || url == ""){
     return;

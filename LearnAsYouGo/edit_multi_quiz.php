@@ -28,24 +28,23 @@ if($edit == 'edit'){
     $modified = 'Delete Information';
 }
 require_once('includes/db_conn.php');
-if($type == 'match'){
-    $query = "SELECT * FROM `matchQuestions` WHERE questionid = '".$questionid."'";
+if($type == 'multi'){
+    $query = "SELECT * FROM `multiQuestions` WHERE questionid = '".$questionid."'";
     $result = $dbc->query($query);
     if(!$result){
-        echo "No Result is Found!";
+        echo "No Record Found!";
         exit();
     }
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
             $question = $row['question'];
-            $left_title = $row['left_title'];
-            $left_options = $row['left_options'];
-            $right_options = $row['right_options'];
-            $right_title = $row['right_title'];
+            $correct_answer = $row['correct_answer'];
+            $options = $row['options'];
             $response = $row['response'];
             $link = $row['link'];
             $url = $row['image_url1'];
             $available = $row['available'];
+            $input = $row['user_input'];
             $response_wrong = $row['response_wrong'];
         }
     }
@@ -62,27 +61,19 @@ document.getElementById("header-role-id").value = role_id;
 </script>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-    <h1>Edit Match Questions</h1>
-        <form action="process_edit_match_quiz.php" method="post">
+    <h1>Edit Multi Choice Questions</h1>
+        <form action="process_edit_multi_quiz.php" method="post">
             <div class="form-group" style="padding-top:20px;">
                 <label for="question">Question</label>
                 <input type="text" class="form-control" id="question" name="question" value="<?= $question ?>">
             </div>
             <div class="form-group">
-                <label for="wrong_answer">Left Title</label>
-                <input type="text" class="form-control" id="left_title" name="left_title" value="<?= $left_title ?>">
+                <label for="wrong_answer">Options</label>
+                <input type="text" class="form-control" id="options" name="options" value="<?= $options ?>">
             </div>
             <div class="form-group">
-                <label for="correct_answer">Left Options</label>
-                <input type="text" class="form-control" id="left_options" name="left_options" value="<?= $left_options ?>">
-            </div>
-            <div class="form-group">
-                <label for="wrong_answer">Right Title</label>
-                <input type="text" class="form-control" id="right_title" name="right_title" value="<?= $right_title ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Right Options (right options should put in the order that match the left options)</label>
-                <input type="text" class="form-control" id="right_options" name="right_options" value="<?= $right_options ?>">
+                <label for="correct_answer">Correct answers (id in options)</label>
+                <input type="text" class="form-control" id="correct_answer" name="correct_answer" value="<?= $correct_answer ?>">
             </div>
             <div class="form-group">
                 <label for="correct_answer">Response For Correct Answers</label>

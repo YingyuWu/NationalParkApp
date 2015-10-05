@@ -28,25 +28,22 @@ if($edit == 'edit'){
     $modified = 'Delete Information';
 }
 require_once('includes/db_conn.php');
-if($type == 'match'){
-    $query = "SELECT * FROM `matchQuestions` WHERE questionid = '".$questionid."'";
+if($type == 'fill'){
+    $query = "SELECT * FROM `FillQuestions` WHERE questionid = '".$questionid."'";
     $result = $dbc->query($query);
     if(!$result){
-        echo "No Result is Found!";
+        echo "No Record Found!";
         exit();
     }
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
             $question = $row['question'];
-            $left_title = $row['left_title'];
-            $left_options = $row['left_options'];
-            $right_options = $row['right_options'];
-            $right_title = $row['right_title'];
-            $response = $row['response'];
+            $answer_short = $row['answer_short'];
+            $answer_long = $row['answer_long'];
             $link = $row['link'];
             $url = $row['image_url1'];
             $available = $row['available'];
-            $response_wrong = $row['response_wrong'];
+            $input = $row['user_input'];
         }
     }
 }else{
@@ -54,56 +51,44 @@ if($type == 'match'){
     exit();
 }
 ?>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script type="text/javascript">
 var user_id = <?php echo json_encode($userid); ?>;
 var role_id = <?php echo json_encode($roleid); ?>;
 document.getElementById("header-user-id").value = user_id;
 document.getElementById("header-role-id").value = role_id;
 </script>
+</head>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-    <h1>Edit Match Questions</h1>
-        <form action="process_edit_match_quiz.php" method="post">
+        <h1>Edit Fill In Questions</h1>
+        <form action="process_edit_fill_quiz.php" method="post">
             <div class="form-group" style="padding-top:20px;">
-                <label for="question">Question</label>
+                <label for="question"> Question</label>
                 <input type="text" class="form-control" id="question" name="question" value="<?= $question ?>">
             </div>
             <div class="form-group">
-                <label for="wrong_answer">Left Title</label>
-                <input type="text" class="form-control" id="left_title" name="left_title" value="<?= $left_title ?>">
+                <label for="correct_answer">Short Response</label>
+                <input type="text" class="form-control" id="answer_short" name="answer_short"  value="<?= $answer_short ?>">
             </div>
             <div class="form-group">
-                <label for="correct_answer">Left Options</label>
-                <input type="text" class="form-control" id="left_options" name="left_options" value="<?= $left_options ?>">
-            </div>
-            <div class="form-group">
-                <label for="wrong_answer">Right Title</label>
-                <input type="text" class="form-control" id="right_title" name="right_title" value="<?= $right_title ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Right Options (right options should put in the order that match the left options)</label>
-                <input type="text" class="form-control" id="right_options" name="right_options" value="<?= $right_options ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Response For Correct Answers</label>
-                <input type="text" class="form-control" id="response" name="response" value="<?= $response ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Response For Wrong Answers</label>
-                <input type="text" class="form-control" id="response_wrong" name="response_wrong" value="<?= $response_wrong ?>">
+                <label for="correct_answer">Long Response</label>
+                <input type="text" class="form-control" id="answer_long" name="answer_long"  value="<?= $answer_long ?>">
             </div>
             <!--<div class="form-group">
                 <label for="input">Visitor's Answer</label>
                 <input type="text" class="form-control" id="user_input" name="user_input"  value="<?= $input ?>">
             </div>-->
             <div class="form-group">
-                <label for="correct_answer">Link(Optional)</label>
-                <input type="text" class="form-control" id="link" name="link" value="<?= $url ?>">
+                <label for="link">Link</label>
+                <input type="text" class="form-control" id="link" name="link"  value="<?= $link ?>">
             </div>
             <div class="form-group">
-                <label for="correct_answer">Image(Optional)</label>
-                <input type="text" class="form-control" id="image-url1" name="image-url1" value="<?= $image ?>">
+                <label for="image-url1">Image</label>
+                <input type="text" class="form-control" id="image-url1" name="image-url1"  value="<?= $url ?>">
             </div>
+           
             <div class="form-group">
                 <label for="type">Availablity (Please enter the 0 or 1)</label>
                 <input type="text" style="width:50px;" class="form-control" id="available" name="type"  value="<?= $available ?>">
@@ -113,9 +98,8 @@ document.getElementById("header-role-id").value = role_id;
             <input type="hidden" id="questionid" name="questionid"value="<?= $questionid ?>">
             <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
             <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
-
         </form>
     </div>
      </div>
 
-<?php include('includes/footer.html'); ?>
+    <?php include('includes/footer.html') ?>

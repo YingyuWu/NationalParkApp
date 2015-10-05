@@ -24,27 +24,19 @@ document.getElementById("header-role-id").value = role_id;
 </script>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-    <h1>Add Match Questions</h1>
-        <form action="process_add_match_quiz.php" method="post">
+    <h1>Single Choice Questions</h1>
+        <form action="process_add_single_quiz.php" method="post">
             <div class="form-group" style="padding-top:20px;">
                 <label for="question">Question</label>
                 <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
             </div>
             <div class="form-group">
-                <label for="wrong_answer">Left Title (title for the left options)</label>
-                <input type="text" class="form-control" id="left_title" name="left_title" placeholder="Enter the title for the left options">
+                <label for="wrong_answer">Options</label>
+                <input type="text" class="form-control" id="options" name="options" placeholder="Enter as many as options you want, separate them by ;">
             </div>
             <div class="form-group">
-                <label for="wrong_answer">Left Options</label>
-                <input type="text" class="form-control" id="left_options" name="left_options" placeholder="Enter as many as left options you want, separate them by ;">
-            </div>
-            <div class="form-group">
-                <label for="wrong_answer">Right Title</label>
-                <input type="text" class="form-control" id="right_title" name="right_title" placeholder="Enter the title for the right options">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Right Options (right options should put in the order that match the left options)</label>
-                <input type="text" class="form-control" id="right_options" name="right_options" placeholder="Enter as many right options as you want, separate them by ;">
+                <label for="correct_answer">Correct answers (id in options)</label>
+                <input type="text" style="width:50px;" maxlength="2" size="2" class="form-control" id="correct_answer" name="correct_answer" placeholder="1">
             </div>
             <div class="form-group">
                 <label for="correct_answer">Response For Correct Answer</label>

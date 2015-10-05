@@ -24,40 +24,28 @@ document.getElementById("header-role-id").value = role_id;
 </script>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-    <h1>Add Match Questions</h1>
-        <form action="process_add_match_quiz.php" method="post">
+        <h1>Add Text/Image Questions</h1>
+        <form action="process_quizAdd.php" method="post">
             <div class="form-group" style="padding-top:20px;">
                 <label for="question">Question</label>
                 <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
             </div>
             <div class="form-group">
-                <label for="wrong_answer">Left Title (title for the left options)</label>
-                <input type="text" class="form-control" id="left_title" name="left_title" placeholder="Enter the title for the left options">
+                <label for="correct_answer">Response</label>
+                <input type="text" class="form-control" id="correct_answer" name="correct_answer" placeholder="Enter the correct answer here">
             </div>
-            <div class="form-group">
-                <label for="wrong_answer">Left Options</label>
-                <input type="text" class="form-control" id="left_options" name="left_options" placeholder="Enter as many as left options you want, separate them by ;">
-            </div>
-            <div class="form-group">
-                <label for="wrong_answer">Right Title</label>
-                <input type="text" class="form-control" id="right_title" name="right_title" placeholder="Enter the title for the right options">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Right Options (right options should put in the order that match the left options)</label>
-                <input type="text" class="form-control" id="right_options" name="right_options" placeholder="Enter as many right options as you want, separate them by ;">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Response For Correct Answer</label>
-                <input type="text" class="form-control" id="response" name="response" placeholder="Enter response for correct answer here">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Response For Wrong Answer</label>
-                <input type="text" class="form-control" id="response_wrong" name="response_wrong" placeholder="Enter response for wrong answer here">
-            </div>
-            <div class="form-group">
+             <div class="form-group">
                 <label for="correct_answer">Link(Optional)</label>
                 <input type="text" class="form-control" id="link" name="link" placeholder="Enter url here">
             </div>
+            <!--<div class="form-group">
+                <label for="correct_answer">Audio(Under Construction)</label>
+                <input type="text" class="form-control" id="audio" name="audio" placeholder="Enter audio here">
+            </div>
+            <div class="form-group">
+                <label for="correct_answer">Gps(Under Construction)</label>
+                <input type="text" class="form-control" id="gps" name="gps" placeholder="Enter gps here">
+            </div>-->
             <div class="form-group">
                 <label for="correct_answer">Image(Optional)</label>
                 <input type="text" class="form-control" id="image-url1" name="image-url1" placeholder="Enter image url here">
@@ -66,6 +54,10 @@ document.getElementById("header-role-id").value = role_id;
             <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
             <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
             <!--
+            <div class="form-group">
+                <label for="wrong_answer1">Wrong Answers</label>
+                <input type="text" class="form-control" id="wrong_answer1" name="wrong_answer1" placeholder="Wrong answer 1">
+            </div>
             <div class="form-group">
                 <label class="sr-only" for="wrong_answer2">Wrong Answers 2</label>
                 <input type="text" class="form-control" id="wrong_answer2" name="wrong_answer2" placeholder="Wrong answer 2">
@@ -81,4 +73,4 @@ document.getElementById("header-role-id").value = role_id;
     </div>
      </div>
 
-<?php include('includes/footer.html'); ?>
+    <?php include('includes/footer.html') ?>

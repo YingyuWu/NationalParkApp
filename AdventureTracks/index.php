@@ -1,86 +1,43 @@
-<!DOCTYPE html>
-<html>
+<?php
+include('includes/header.html');
 
-<head>
+?>
 
-  <meta charset="UTF-8">
-
-  <title>CSS3仿wordpress网站后台管理菜单导航DEMO演示</title>
-
-    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml">
+<head> 
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+    <title>Adventure Tracks</title> 
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/show_question.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-
 <body>
-
-  <span class='bckg'></span>
-<header>
-  <h1>
-    Dashboard
-  </h1>
-  <nav>
-    <ul>
-      <li>
-        <a data-title='Projects'>Projects</a>
-      </li>
-      <li>
-        <a data-title='Team'>Team</a>
-      </li>
-      <li>
-        <a data-title='Diary'>Diary</a>
-      </li>
-      <li>
-        <a data-title='Timeline'>Timeline</a>
-      </li>
-      <li>
-        <a data-title='Settings'>Settings</a>
-      </li>
-      <li>
-        <a data-title='Search'>Search</a>
-      </li>
-    </ul>
-  </nav>
-</header>
-<main>
-  <div class='title'>
-    <h2>Projects</h2>
-    <a href='#' title='Profil'>
-      Hello Bob !
-    </a>
-  </div>
-  <article class='larg'>
-    <div>
-      <h3>
-        Project 1
-        <span class='entypo-down-open'></span>
-      </h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus iste quia incidunt ad provident ullam quo assumenda expedita quae sapiente ipsa qui esse similique! Modi obcaecati natus sapiente quaerat omnis.</p>
-    </div>
-    <div>
-      <h3>
-        Project 2
-        <span class='entypo-down-open'></span>
-      </h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus iste quia incidunt ad provident ullam quo assumenda expedita quae sapiente ipsa qui esse similique! Modi obcaecati natus sapiente quaerat omnis.</p>
-    </div>
-    <div>
-      <h3>
-        Project 3
-        <span class='entypo-down-open'></span>
-      </h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus iste quia incidunt ad provident ullam quo assumenda expedita quae sapiente ipsa qui esse similique! Modi obcaecati natus sapiente quaerat omnis.</p>
-    </div>
-	<div style="text-align:center;clear:both;">
-<script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
-<script src="/follow.js" type="text/javascript"></script>
+<div class="main"> 
+	<div class="left">
+	     <ul>
+       <li><a>Text/Image Questions</a></li>
+       <li><a>Fill In Questions</a></li>
+       <li><a>Single Choice Questions</a></li>
+       <li><a>Multiple Choice Questions</a></li>
+       <li><a>Match Questions</a></li>
+       <li><a>Correct Order Questions</a></li>
+       <li><a>Information</a></li>
+       </ul>
+	</div>
+	<div class="wrappermiddle">
+		<div class="middle">
+		    Middle column: liquid
+		</div>	
+	</div>    
+	<!--<div class="right">
+	    Right column: 
+	     <br>
+	     fixed width 200 px 
+	</div>  -->   
 </div>
-  </article>
-</main>
-
-  <script src='js/jquery.js'></script>
-
-  <script src="js/index.js"></script>
-
 </body>
-
 </html>
+<?php include('includes/footer.html') ?>

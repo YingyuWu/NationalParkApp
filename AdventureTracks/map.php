@@ -33,13 +33,14 @@ if($track_type == ''){
     echo "track_type is invalid";
     exit();
 }
-$query = "SELECT * FROM `AdventureTracksPoints` WHERE User_ID = '".$userid."' AND Track_Type = '".$track_type."'";
+$query = "SELECT * FROM `AdventureTracksPoints` WHERE User_ID = '".$userid."' AND Track_Type = '".$track_type."' ORDER BY 'ID'";
 $result = $dbc->query($query);
 $count = 0;
 $lat = array();
 $lnt = array();
 $locat_id = array();
 $descriptions = array();
+$titles = array();
 if(!$result){
         echo '<h1>System Error</h1>';
         exit();
@@ -50,6 +51,7 @@ if($result->num_rows > 0){
             $lat[$count] = $row['Latitude'];
             $lnt[$count] = $row['Longitude'];
             $locat_id[$count] = $row['ID'];
+            $titles[$count] = $row['Title'];
             $descriptions[$count] = $row['Description'];
             $count++;   
         }
@@ -66,6 +68,7 @@ if(count($lat) != count($lnt)){
 //<![CDATA[
       // this variable will collect the html which will eventually be placed in the side_bar 
       var side_bar_html = ""; 
+      var right_bar_html = "";
     
       // arrays to hold copies of the markers and html used by the side_bar 
       // because the function closure trick doesnt work there 
@@ -73,7 +76,9 @@ if(count($lat) != count($lnt)){
       var map = null;
       var lats;
       var lnts;
+      var titles;
       var descriptions;
+      var locat_id;
 
 
 
@@ -81,8 +86,9 @@ function initialize() {
   // create the map
   lats = <?php echo json_encode($lat); ?>;//all the points from database
   lnts = <?php echo json_encode($lnt); ?>;
+  titles = <?php echo json_encode($titles); ?>;
   descriptions = <?php echo json_encode($descriptions); ?>;
-  var locat_id = <?php echo json_encode($locat_id); ?>;
+  locat_id = <?php echo json_encode($locat_id); ?>;
   var user_id = <?php echo json_encode($userid); ?>;
   var role_id = <?php echo json_encode($roleid); ?>;
   var track_type = <?php echo json_encode($track_type); ?>;
@@ -92,7 +98,7 @@ function initialize() {
   document.getElementById("header-role-id").value = role_id;
   if(lats.length == 0){
     var myOptions = {
-    zoom: 15,
+    zoom: 17,
     center: new google.maps.LatLng(41.221030,-81.519655),
     mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
@@ -147,6 +153,7 @@ function initialize() {
 
   // put the assembled side_bar_html contents into the side_bar div
   document.getElementById("side_bar").innerHTML = side_bar_html;
+  document.getElementById("right_bar").innerHTML = right_bar_html;
 }//End of Initialize
  
 var infowindow = new google.maps.InfoWindow(
@@ -176,18 +183,19 @@ function createMarker(latlng, name, html) {
         contentString = html;
         contentString = contentString;
         infowindow.setContent("<p>Location ID:" + marker.id + "</p>"+contentString); 
-        infowindow.open(map,marker);        
-        //side_bar_html = "<p> Lat: " + marker.position.G + " Lnt: " + marker.position.K + "</p> <br>";
+        infowindow.open(map,marker);
+        viewDescription(marker.id); //show descritption on right_bar       
         });
     // save the info we need to use later for the side_bar
     gmarkers.push(marker);
-    // add a line to the side_bar html
-    //side_bar_html += '<a style= "color: #3C3C3C; font-weight:bold;" href="javascript:myclick(' + (gmarkers.length-1) + ')">' + name + '<\/a> &nbsp';
+  
     var side_content = "";
-    descriptions.forEach(function(des){
-        side_content += "&nbsp;&nbsp;<img style='width:20px; height:30px' src='images/marker.png'>&nbsp;" + des + "<br>"; 
+    titles.forEach(function(des,i){
+        side_content += "&nbsp;&nbsp;<img style='width:20px; height:30px' src='images/marker.png'>&nbsp;<a name='"+ locat_id[i] +"' onclick='viewPointDescription(this)'>" + des + "</a><br>"; 
     })
     side_bar_html = side_content;
+    right_bar_html = "<p>&nbsp;&nbsp;Click on points to view description!</p>";
+
 }
  
 </script> 
@@ -214,8 +222,9 @@ function createMarker(latlng, name, html) {
     <div class="middle" id="main-content">
          <!-- you can use tables or divs for the overall layout --> 
      <div style="width:100%; height:700px;margin:0 auto;border: 1px solid black;">
-             <div id="map_canvas" style="width: 50%; height: 100%;float:left;border-right: 1px solid black;"></div> 
-            <div id="side_bar" style="width:50%; height:100%; overflow-y:auto; "></div> 
+             <div id="map_canvas" style="width: 33%; height: 100%;float:left;border-right: 1px solid black;"></div> 
+            <div id="side_bar" style="width:33%; height:100%; float:left; overflow-y:auto; border-right: 1px solid black;"></div> 
+            <div id="right_bar" style="width:33%; height:100%; overflow-y:auto; "></div> 
       </div>
       <br>
       <div style="margin:0 auto; width:100%;">
@@ -236,6 +245,13 @@ function createMarker(latlng, name, html) {
   </body> 
 </html> 
 <script type="text/javascript">
+function viewPointDescription(ele){
+  var id = ele.name;
+  var roleid = document.getElementById("role-id").value;
+  var userid = document.getElementById("user-id").value;
+  viewDescription(id);
+}
+
 function filterPoints(ele){
   var filterpoint = document.getElementById("filter").value;
   if(filterpoint.length == 0 || filterpoint == undefined){
@@ -250,21 +266,15 @@ function filterPoints(ele){
       return;
     }
   }
-  $.ajax({ url: 'process_show_description.php',
-               data: {check:'review',locatID: filterpoint},
-               type: 'post',
-               success: function(output) {
-                    $('#side_bar').html(output);
-                }
-          });
-filterClick(filterpoint);
+  viewDescription(filterpoint);
+  filterClick(filterpoint);
 }
 function viewDescription(locatid){
   $.ajax({ url: 'process_show_description.php',
                data: {check:'review',locatID: locatid},
                type: 'post',
                success: function(output) {
-                    $('#side_bar').html(output);
+                    $('#right_bar').html(output);
                 }
           });
 }

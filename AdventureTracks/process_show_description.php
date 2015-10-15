@@ -41,7 +41,7 @@ require_once('includes/db_conn.php');
 //     }
 // }else 
 if($check == 'review'){
-	$query = "SELECT * FROM `Location` WHERE ID = '".$locat_ID."'";
+	$query = "SELECT * FROM `AdventureTracksPoints` WHERE ID = '".$locat_ID."'";
 	$result = $dbc->query($query);
     if(!$result){
         echo "System Error";

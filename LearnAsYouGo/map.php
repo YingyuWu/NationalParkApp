@@ -55,7 +55,7 @@ if($result->num_rows > 0){
 }else{
     echo "<p>No results matching</p>";
 }
-if(count($lat) == 0 || count($lnt) == 0 || count($lat) != count($lnt) || count($locat_id) == 0){
+if(count($lat) != count($lnt)){
   echo "<p>Locations loading error</p>";
   exit();
 }

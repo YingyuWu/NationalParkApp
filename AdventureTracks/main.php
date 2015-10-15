@@ -34,9 +34,11 @@ if($result->num_rows > 0){
 function init(){
   var user_id = <?php echo json_encode($userid); ?>;
   var role_id = <?php echo json_encode($roleid); ?>;
+  var track_type = <?php echo json_encode($track_type); ?>;
   var description = <?php echo json_encode($track_description ); ?>;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
+  document.getElementById("track-type").value = track_type;
   document.getElementById("header-user-id").value = user_id;
   document.getElementById("header-role-id").value = role_id;
   document.getElementById("main-content").innerHTML = "<h1 class='description'><b>Description</b></h1>" + description;
@@ -59,6 +61,7 @@ function init(){
 <div class="main"> 
 	<div class="left">
 	     <ul>
+       <li><a onclick="viewPoints(this)">Points</a></li>
        <li><a>Text/Image Questions</a></li>
        <li><a>Fill In Questions</a></li>
        <li><a>Single Choice Questions</a></li>
@@ -66,12 +69,11 @@ function init(){
        <li><a>Match Questions</a></li>
        <li><a>Correct Order Questions</a></li>
        <li><a>Information</a></li>
-       <li><a>Points Based Information</a></li>
        </ul>
 	</div>
 	<div class="wrappermiddle">
 		<div class="middle" id="main-content">
-		</div>	
+
 	</div>    
 	<!--<div class="right">
 	    Right column: 
@@ -81,6 +83,16 @@ function init(){
 </div>
 <input type="hidden" name="user_id" value="hidden" id="user-id">
 <input type="hidden" name="role_id" value="hidden" id="role-id">
+<input type="hidden" name="track_type" value="hidden" id="track-type">
 </body>
 </html>
 <?php include('includes/footer.html') ?>
+<script type="text/javascript">
+function viewPoints(ele){
+  var userid = document.getElementById("user-id").value;
+  var roleid = document.getElementById("role-id").value;
+  var track_type = document.getElementById("track-type").value;
+  var url = "map.php?userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type;
+  window.location = url;
+}
+</script>

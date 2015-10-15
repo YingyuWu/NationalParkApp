@@ -1,6 +1,5 @@
 <?php
 include('includes/header.html');
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -12,12 +11,7 @@ include('includes/header.html');
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/show_question.css">
-<script type="text/javascript">
-
-jQuery(function($){
-  $('#question1').load('answer.html #question1');
-});
-</script>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 <style type="text/css">
 html, body { height: 100%; } 
  
@@ -34,12 +28,18 @@ if($roleid == ''){
     echo "Role ID is invalid";
     exit();
 }
-$query = "SELECT * FROM `Location` WHERE User_ID = '".$userid."' AND Location_type = '0'";
+$track_type = $_GET['trackType'];
+if($track_type == ''){
+    echo "track_type is invalid";
+    exit();
+}
+$query = "SELECT * FROM `AdventureTracksPoints` WHERE User_ID = '".$userid."' AND Track_Type = '".$track_type."'";
 $result = $dbc->query($query);
 $count = 0;
 $lat = array();
 $lnt = array();
 $locat_id = array();
+$descriptions = array();
 if(!$result){
         echo '<h1>System Error</h1>';
         exit();
@@ -50,17 +50,17 @@ if($result->num_rows > 0){
             $lat[$count] = $row['Latitude'];
             $lnt[$count] = $row['Longitude'];
             $locat_id[$count] = $row['ID'];
+            $descriptions[$count] = $row['Description'];
             $count++;   
         }
 }else{
     echo "<p>No results matching</p>";
 }
-if(count($lat) == 0 || count($lnt) == 0 || count($lat) != count($lnt) || count($locat_id) == 0){
+if(count($lat) != count($lnt)){
   echo "<p>Locations loading error</p>";
   exit();
 }
 ?>
-
 <script type="text/javascript"> 
 
 //<![CDATA[
@@ -71,29 +71,45 @@ if(count($lat) == 0 || count($lnt) == 0 || count($lat) != count($lnt) || count($
       // because the function closure trick doesnt work there 
       var gmarkers = []; 
       var map = null;
+      var lats;
+      var lnts;
+      var descriptions;
 
 
 
 function initialize() {
   // create the map
-  var lats = <?php echo json_encode($lat); ?>;//all the points from database
-  var lnts = <?php echo json_encode($lnt); ?>;
+  lats = <?php echo json_encode($lat); ?>;//all the points from database
+  lnts = <?php echo json_encode($lnt); ?>;
+  descriptions = <?php echo json_encode($descriptions); ?>;
   var locat_id = <?php echo json_encode($locat_id); ?>;
   var user_id = <?php echo json_encode($userid); ?>;
   var role_id = <?php echo json_encode($roleid); ?>;
+  var track_type = <?php echo json_encode($track_type); ?>;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
   document.getElementById("header-user-id").value = user_id;
   document.getElementById("header-role-id").value = role_id;
-
-  var myOptions = {
-    zoom: 10,
+  if(lats.length == 0){
+    var myOptions = {
+    zoom: 15,
+    center: new google.maps.LatLng(41.221030,-81.519655),
+    mapTypeControl: true,
+    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+    navigationControl: true,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+  }else{
+    var myOptions = {
+    zoom: 15,
     center: new google.maps.LatLng(lats[0],lnts[0]),
     mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
     navigationControl: true,
     mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
   }
+  
   map = new google.maps.Map(document.getElementById("map_canvas"),
                                 myOptions);
  
@@ -156,7 +172,7 @@ function createMarker(latlng, name, html) {
 
     google.maps.event.addListener(marker, 'click', function() {
         document.getElementById("locat-id").value = marker.id;
-        viewDescription(marker.id);
+        //viewDescription(marker.id);
         contentString = html;
         contentString = contentString;
         infowindow.setContent("<p>Location ID:" + marker.id + "</p>"+contentString); 
@@ -167,7 +183,11 @@ function createMarker(latlng, name, html) {
     gmarkers.push(marker);
     // add a line to the side_bar html
     //side_bar_html += '<a style= "color: #3C3C3C; font-weight:bold;" href="javascript:myclick(' + (gmarkers.length-1) + ')">' + name + '<\/a> &nbsp';
-    side_bar_html = '<p>&nbsp;&nbsp;&nbsp;Please click a point to begin!</p>'
+    var side_content = "";
+    descriptions.forEach(function(des){
+        side_content += "&nbsp;&nbsp;<img style='width:20px; height:30px' src='images/marker.png'>&nbsp;" + des + "<br>"; 
+    })
+    side_bar_html = side_content;
 }
  
 </script> 
@@ -176,20 +196,43 @@ function createMarker(latlng, name, html) {
 
 
 
-<body style="margin-top:100px; margin-left:100px; padding:0px;" > 
- 
-    <!-- you can use tables or divs for the overall layout --> 
-   <div style="width:100%; height:700px;margin:0 auto;border: 2px solid black;">
-           <div id="map_canvas" style="width: 50%; height: 100%;float:left;border-right: 1px solid black;"></div> 
-          <div id="side_bar" style="width:50%; height:100%; overflow-y:auto; "></div> 
-    </div>
-    <br>
-    <div style="margin:0 auto; width:100%;">
-    <b>Point Filter: </b><input type = "text" id="filter" placeholder="Enter Point ID"> &nbsp;&nbsp;&nbsp;<input type="button" value="GO" onclick="filterPoints()">
-    </div>
-    <input type="hidden" name="locat_id" id="locat-id" value="hidden">
-    <input type="hidden" name="user_id" value="hidden" id="user-id">
-    <input type="hidden" name="role_id" value="hidden" id="role-id">
+<body > 
+ <div class="main"> 
+  <div class="left">
+       <ul>
+       <li><a onclick="viewPoints(this)">Points</a></li>
+       <li><a>Text/Image Questions</a></li>
+       <li><a>Fill In Questions</a></li>
+       <li><a>Single Choice Questions</a></li>
+       <li><a>Multiple Choice Questions</a></li>
+       <li><a>Match Questions</a></li>
+       <li><a>Correct Order Questions</a></li>
+       <li><a>Information</a></li>
+       </ul>
+  </div>
+  <div class="wrappermiddle">
+    <div class="middle" id="main-content">
+         <!-- you can use tables or divs for the overall layout --> 
+     <div style="width:100%; height:700px;margin:0 auto;border: 1px solid black;">
+             <div id="map_canvas" style="width: 50%; height: 100%;float:left;border-right: 1px solid black;"></div> 
+            <div id="side_bar" style="width:50%; height:100%; overflow-y:auto; "></div> 
+      </div>
+      <br>
+      <div style="margin:0 auto; width:100%;">
+      <b>Point Filter: </b><input type = "text" id="filter" placeholder="Enter Point ID"> &nbsp;&nbsp;&nbsp;<input type="button" value="GO" onclick="filterPoints()">
+      </div>
+  </div>    
+  <!--<div class="right">
+      Right column: 
+       <br>
+       fixed width 200 px 
+  </div>  -->   
+</div>
+<input type="hidden" name="user_id" value="hidden" id="user-id">
+<input type="hidden" name="role_id" value="hidden" id="role-id">
+<input type="hidden" name="track_type" value="hidden" id="track-type">
+<input type="hidden" name="locat_id" value="hidden" id="locat-id">
+   
   </body> 
 </html> 
 <script type="text/javascript">
@@ -269,9 +312,9 @@ function addQuestions(ele){
   }else if(ele.name == 'multi'){
     url = "add_multi_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'fact'){
-  	url = "add_fact_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_fact_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }else if(ele.name == 'match'){
-  	url = "add_match_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_match_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
   }
   if(url == undefined || url == ""){
     return;

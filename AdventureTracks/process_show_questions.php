@@ -10,6 +10,7 @@ $extra = ($_POST['extra']);
 $role_id = ($_POST['roleID']);
 $user_id = ($_POST['userID']);
 $query = '';
+$track_type = ($_POST['trackType']);
 //connect to the database
 require_once('includes/db_conn.php');
 
@@ -52,7 +53,7 @@ if($check == 'update'){
     }
 }
 
-if($locat_ID == '' && $check == 'review'){
+if( $check == 'review'&& $locat_ID == ''){
     echo "Location ID Error";
     //exit();
 }
@@ -69,9 +70,9 @@ if($role_id == '0'){
 if($type == 'text'){
 	//$table = 'questions';
     if($check == 'all' || $extra == 'all'){//extra control
-        $query = "SELECT questionid,question,available FROM `questions`";
+        $query = "SELECT questionid,question,available FROM `questions` WHERE Question_Type='1' AND Track_Type='".$track_type."'";
     }else{
-        $query = "SELECT questionid,question,available FROM `questions` WHERE Locat_ID='".$locat_ID."'";
+        $query = "SELECT questionid,question,available FROM `questions` WHERE Locat_ID='".$locat_ID."' AND Question_Type='1' AND Track_Type='".$track_type."'";
     }
 	$count = 0;
 	$result = $dbc->query($query);
@@ -112,9 +113,9 @@ if($type == 'text'){
 }else if($type == 'fill'){
 	//$table = 'FillQuestions';
     if($check == 'all' || $extra == 'all'){//extra control
-        $query = "SELECT questionid,question,available FROM `FillQuestions`";
+        $query = "SELECT questionid,question,available FROM `FillQuestions` WHERE Question_Type='1' AND Track_Type='".$track_type."'";
     }else{
-        $query = "SELECT questionid,question,available FROM `FillQuestions` WHERE Locat_ID='".$locat_ID."'";
+        $query = "SELECT questionid,question,available FROM `FillQuestions` WHERE Locat_ID='".$locat_ID."' AND Question_Type='1' AND Track_Type='".$track_type."'";
     }
     $count = 0;
     $result = $dbc->query($query);
@@ -155,9 +156,9 @@ if($type == 'text'){
 }else if($type == 'single'){
 	//$table = 'singleQuestions';
 	if($check == 'all' || $extra == 'all'){//extra control
-        $query = "SELECT questionid,question,available FROM `singleQuestions`";
+        $query = "SELECT questionid,question,available FROM `singleQuestions` WHERE Question_Type='1' AND Track_Type='".$track_type."'";
     }else{
-        $query = "SELECT questionid,question,available FROM `singleQuestions` WHERE Locat_ID='".$locat_ID."'";
+        $query = "SELECT questionid,question,available FROM `singleQuestions` WHERE Locat_ID='".$locat_ID."' AND Question_Type='1' AND Track_Type='".$track_type."'";
     }
     $count = 0;
     $result = $dbc->query($query);
@@ -201,9 +202,9 @@ if($type == 'text'){
 }else if($type == 'order'){
 	//$table = 'orderQuestions';
     if($check == 'all' || $extra == 'all'){//extra control
-        $query = "SELECT questionid,question,available FROM `orderQuestions`";
+        $query = "SELECT questionid,question,available FROM `orderQuestions` WHERE Question_Type='1' AND Track_Type='".$track_type."'";
     }else{
-        $query = "SELECT questionid,question,available FROM `orderQuestions` WHERE Locat_ID='".$locat_ID."'";
+        $query = "SELECT questionid,question,available FROM `orderQuestions` WHERE Locat_ID='".$locat_ID."' AND Question_Type='1' AND Track_Type='".$track_type."'";
     }
 	$count = 0;
 	$result = $dbc->query($query);
@@ -245,9 +246,9 @@ if($type == 'text'){
     echo "</table>";
 }else if($type == 'multi'){
     if($check == 'all' || $extra == 'all'){//extra control
-        $query = "SELECT questionid,question,available FROM `multiQuestions`";
+        $query = "SELECT questionid,question,available FROM `multiQuestions` WHERE Question_Type='1' AND Track_Type='".$track_type."'";
     }else{
-        $query = "SELECT questionid,question,available FROM `multiQuestions` WHERE Locat_ID='".$locat_ID."'";
+        $query = "SELECT questionid,question,available FROM `multiQuestions` WHERE Locat_ID='".$locat_ID."' AND Question_Type='1' AND Track_Type='".$track_type."'";
     }
     $count = 0;
     $result = $dbc->query($query);
@@ -289,9 +290,9 @@ if($type == 'text'){
     echo "</table>";
 }else if($type == 'fact'){
     if($check == 'all' || $extra == 'all'){//extra control
-        $query = "SELECT questionid,question,available FROM `factInformation`";
+        $query = "SELECT questionid,question,available FROM `factInformation` WHERE Question_Type='1' AND Track_Type='".$track_type."'";
     }else{
-        $query = "SELECT questionid,question,available FROM `factInformation` WHERE Locat_ID='".$locat_ID."'";
+        $query = "SELECT questionid,question,available FROM `factInformation` WHERE Locat_ID='".$locat_ID."' AND Question_Type='1' AND Track_Type='".$track_type."'";
     }
     $count = 0;
     $result = $dbc->query($query);
@@ -333,9 +334,9 @@ if($type == 'text'){
     echo "</table>";
 }else if($type == 'match'){
     if($check == 'all' || $extra == 'all'){//extra control
-        $query = "SELECT questionid,question,available FROM `matchQuestions`";
+        $query = "SELECT questionid,question,available FROM `matchQuestions` WHERE Question_Type='1' AND Track_Type='".$track_type."'";
     }else{
-        $query = "SELECT questionid,question,available FROM `matchQuestions` WHERE Locat_ID='".$locat_ID."'";
+        $query = "SELECT questionid,question,available FROM `matchQuestions` WHERE Locat_ID='".$locat_ID."' AND Question_Type='1' AND Track_Type='".$track_type."'";
     }
     $count = 0;
     $result = $dbc->query($query);

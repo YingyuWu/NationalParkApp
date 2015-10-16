@@ -9,5 +9,7 @@ div, ul,li,a  {margin:0; padding:0;}
 	#query_result { width: 100%;}
 	#query_result tr{border-bottom:1px solid black;}
 	#query_result td{border-left:1px solid black; width:25%;text-align:center;}
+	#description_menu a{border:0px; color:blue;}
+
 
 	

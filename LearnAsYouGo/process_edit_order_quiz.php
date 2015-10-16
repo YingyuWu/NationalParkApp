@@ -56,7 +56,7 @@ if($orderType == '1'){
 	$query_update = "UPDATE `parkapps`.`orderQuestions` SET `question` = '".$question."', `link` = '".$link."', `image_url1` = '".$url."', `order1` = '".$correct_order_1."',`order2` = '".$correct_order_2."',`order3` = '".$correct_order_3."',`order4` = '".$correct_order_4."',`available` = '".$available."' WHERE `orderQuestions`.`questionid` = '".$questionid."';";
 	$query_delete = "DELETE FROM `parkapps`.`orderQuestions` WHERE `orderQuestions`.`questionid` = '".$questionid."'";
 }else if($orderType == '0'){
-	$query_update = "UPDATE `parkapps`.`orderQuestions` SET `question` = '".$question."', `link` = '".$link."', `image1` = '".$correct_order_1."',`image2` = '".$correct_order_2."',`image3` = '".$correct_order_3."',`image4` = '".$correct_order_4."',`available` = '".$available."' WHERE `orderQuestions`.`questionid` = '".$questionid."';";
+	$query_update = "UPDATE `parkapps`.`orderQuestions` SET `question` = '".$question."', `link` = '".$link."', `order1` = '".$correct_order_1."',`order2` = '".$correct_order_2."',`order3` = '".$correct_order_3."',`order4` = '".$correct_order_4."',`available` = '".$available."' WHERE `orderQuestions`.`questionid` = '".$questionid."';";
 	$query_delete = "DELETE FROM `parkapps`.`orderQuestions` WHERE `orderQuestions`.`questionid` = '".$questionid."'";
 }
 

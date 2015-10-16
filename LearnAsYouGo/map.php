@@ -34,7 +34,7 @@ if($roleid == ''){
     echo "Role ID is invalid";
     exit();
 }
-$query = "SELECT * FROM `Location` WHERE User_ID = '".$userid."' AND Location_type = '0'";
+$query = "SELECT * FROM `Location` WHERE User_ID = '".$userid."' AND (Location_type = '0' OR Location_type = '2') AND Pub_Or_Priva = '1'";
 $result = $dbc->query($query);
 $count = 0;
 $lat = array();

@@ -33,7 +33,7 @@ if($track_type == ''){
     echo "track_type is invalid";
     exit();
 }
-$query = "SELECT * FROM `AdventureTracksPoints` WHERE User_ID = '".$userid."' AND Track_Type = '".$track_type."' ORDER BY 'ID'";
+$query = "SELECT * FROM `Location` INNER JOIN `AdventureTracksPoints` WHERE `AdventureTracksPoints`.Locat_ID=`Location`.ID AND `Location`.User_ID = '".$userid."' AND `AdventureTracksPoints`.Track_Type = '".$track_type."' AND `Location`.Pub_Or_Priva = '1' ORDER BY `Location`.ID";
 $result = $dbc->query($query);
 $count = 0;
 $lat = array();
@@ -50,7 +50,7 @@ if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
             $lat[$count] = $row['Latitude'];
             $lnt[$count] = $row['Longitude'];
-            $locat_id[$count] = $row['ID'];
+            $locat_id[$count] = $row['Locat_ID'];
             $titles[$count] = $row['Title'];
             $descriptions[$count] = $row['Description'];
             $count++;   
@@ -79,6 +79,9 @@ if(count($lat) != count($lnt)){
       var titles;
       var descriptions;
       var locat_id;
+      var track_type;
+      var user_id;
+      var role_id;
 
 
 
@@ -89,13 +92,18 @@ function initialize() {
   titles = <?php echo json_encode($titles); ?>;
   descriptions = <?php echo json_encode($descriptions); ?>;
   locat_id = <?php echo json_encode($locat_id); ?>;
-  var user_id = <?php echo json_encode($userid); ?>;
-  var role_id = <?php echo json_encode($roleid); ?>;
-  var track_type = <?php echo json_encode($track_type); ?>;
+  user_id = <?php echo json_encode($userid); ?>;
+  role_id = <?php echo json_encode($roleid); ?>;
+  track_type = <?php echo json_encode($track_type); ?>;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
+  document.getElementById("track-type").value = track_type;
   document.getElementById("header-user-id").value = user_id;
   document.getElementById("header-role-id").value = role_id;
+
+
+
+
   if(lats.length == 0){
     var myOptions = {
     zoom: 17,
@@ -133,14 +141,14 @@ function initialize() {
  //'<p>is a Hiking spot in Peninsula. Plan your road trip to Waldo Semon Woods in OH with Roadtrippers.</p>'+
  //'<a style= "color: #EA0000;" href = "question.php" > Lets play some questions about Waldo Semon Woods, click me</a>';
 
-  var question = '<a style= "color: #000000;" id="question-type" name="text" href = "#" onclick="viewQuestions(this);return false;"> 1.Text/Image Questions</a>&nbsp;&nbsp;&nbsp;<a name="text" onclick="addQuestions(this);return false;">Add New</a><br/>'+
+  var question = '<a style= "color: #000000;" id="question-type" name="text" href = "#" onclick="viewQuestionsByPointID(this);return false;"> 1.Text/Image Questions</a>&nbsp;&nbsp;&nbsp;<a name="text" onclick="addQuestions(this);return false;">Add New</a><br/>'+
   //'<a style= "color: #7B7B7B;" id="question-type" name="image" href = "#" onclick="viewQuestions(this);return false;" > 2.Image Questions</a>&nbsp;&nbsp;&nbsp;<a name="image" onclick="addQuestions(this);return false;">Add New</a><br/>'+
-  '<a style= "color: #000000;" id="question-type" name="fill" href = "#" onclick="viewQuestions(this);return false;" > 2.Fill-in Blank Questions</a>&nbsp;&nbsp;&nbsp;<a name="fill" onclick="addQuestions(this);return false;">Add New</a><br/>'+
-  '<a style= "color: #7B7B7B;" id="question-type" name="single" href = "#" onclick="viewQuestions(this);return false;" > 3.Single Choice Questions</a>&nbsp;&nbsp;&nbsp;<a name="single" onclick="addQuestions(this);return false;">Add New</a><br/>'+
-  '<a style= "color: #000000;" id="question-type" name="multi" href = "#" onclick="viewQuestions(this);return false;" > 4.Multiple Choice Questions</a>&nbsp;&nbsp;&nbsp;<a name="multi" onclick="addQuestions(this);return false;">Add New</a><br/>'+
-  '<a style= "color: #7B7B7B;" id="question-type" name="order" href = "#" onclick="viewQuestions(this);return false;" > 5.Correct Order Questions</a>&nbsp;&nbsp;&nbsp;<a name="order" onclick="addQuestions(this);return false;"">Add New</a><br/>'+
-  '<a style= "color: #7B7B7B;" id="question-type" name="fact" href = "#" onclick="viewQuestions(this);return false;" > 6.Information</a>&nbsp;&nbsp;&nbsp;<a name="fact" onclick="addQuestions(this);return false;"">Add New</a><br/>'+
-  '<a style= "color: #7B7B7B;" id="question-type" name="match" href = "#" onclick="viewQuestions(this);return false;" > 7.Match Questions</a>&nbsp;&nbsp;&nbsp;<a name="match" onclick="addQuestions(this);return false;"">Add New</a><br/>';
+  '<a style= "color: #000000;" id="question-type" name="fill" href = "#" onclick="viewQuestionsByPointID(this);return false;" > 2.Fill-in Blank Questions</a>&nbsp;&nbsp;&nbsp;<a name="fill" onclick="addQuestions(this);return false;">Add New</a><br/>'+
+  '<a style= "color: #7B7B7B;" id="question-type" name="single" href = "#" onclick="viewQuestionsByPointID(this);return false;" > 3.Single Choice Questions</a>&nbsp;&nbsp;&nbsp;<a name="single" onclick="addQuestions(this);return false;">Add New</a><br/>'+
+  '<a style= "color: #000000;" id="question-type" name="multi" href = "#" onclick="viewQuestionsByPointID(this);return false;" > 4.Multiple Choice Questions</a>&nbsp;&nbsp;&nbsp;<a name="multi" onclick="addQuestions(this);return false;">Add New</a><br/>'+
+  '<a style= "color: #7B7B7B;" id="question-type" name="order" href = "#" onclick="viewQuestionsByPointID(this);return false;" > 5.Correct Order Questions</a>&nbsp;&nbsp;&nbsp;<a name="order" onclick="addQuestions(this);return false;"">Add New</a><br/>'+
+  '<a style= "color: #7B7B7B;" id="question-type" name="fact" href = "#" onclick="viewQuestionsByPointID(this);return false;" > 6.Information</a>&nbsp;&nbsp;&nbsp;<a name="fact" onclick="addQuestions(this);return false;"">Add New</a><br/>'+
+  '<a style= "color: #7B7B7B;" id="question-type" name="match" href = "#" onclick="viewQuestionsByPointID(this);return false;" > 7.Match Questions</a>&nbsp;&nbsp;&nbsp;<a name="match" onclick="addQuestions(this);return false;"">Add New</a><br/>';
 
 
 
@@ -189,7 +197,7 @@ function createMarker(latlng, name, html) {
     // save the info we need to use later for the side_bar
     gmarkers.push(marker);
   
-    var side_content = "";
+    var side_content = "<h2 style='padding-left:10px;'>List Of Points</h2>";
     titles.forEach(function(des,i){
         side_content += "&nbsp;&nbsp;<img style='width:20px; height:30px' src='images/marker.png'>&nbsp;<a name='"+ locat_id[i] +"' onclick='viewPointDescription(this)'>" + des + "</a><br>"; 
     })
@@ -209,13 +217,13 @@ function createMarker(latlng, name, html) {
   <div class="left">
        <ul>
        <li><a onclick="viewPoints(this)">Points</a></li>
-       <li><a>Text/Image Questions</a></li>
-       <li><a>Fill In Questions</a></li>
-       <li><a>Single Choice Questions</a></li>
-       <li><a>Multiple Choice Questions</a></li>
-       <li><a>Match Questions</a></li>
-       <li><a>Correct Order Questions</a></li>
-       <li><a>Information</a></li>
+       <li><a name="text" onclick="viewQuestions(this)">Text/Image Questions</a></li>
+       <li><a name="fill" onclick="viewQuestions(this)">Fill In Questions</a></li>
+       <li><a name="single" onclick="viewQuestions(this)">Single Choice Questions</a></li>
+       <li><a name="multi" onclick="viewQuestions(this)">Multiple Choice Questions</a></li>
+       <li><a name="match" onclick="viewQuestions(this)">Match Questions</a></li>
+       <li><a name="order" onclick="viewQuestions(this)">Correct Order Questions</a></li>
+       <li><a name="fact" onclick="viewQuestions(this)">Information</a></li>
        </ul>
   </div>
   <div class="wrappermiddle">
@@ -251,7 +259,13 @@ function viewPointDescription(ele){
   var userid = document.getElementById("user-id").value;
   viewDescription(id);
 }
-
+function viewPoints(ele){
+  var userid = document.getElementById("user-id").value;
+  var roleid = document.getElementById("role-id").value;
+  var track_type = document.getElementById("track-type").value;
+  var url = "map.php?userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type;
+  window.location = url;
+}
 function filterPoints(ele){
   var filterpoint = document.getElementById("filter").value;
   if(filterpoint.length == 0 || filterpoint == undefined){
@@ -279,23 +293,32 @@ function viewDescription(locatid){
           });
 }
 function viewQuestions(ele){
+  var roleid = document.getElementById("role-id").value;
+  var userid = document.getElementById("user-id").value;
+  var track_type = document.getElementById("track-type").value;
+  var type = ele.name;
+  var url = "show_questions.php?userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type + "&Type=" + type;
+  window.location = url;
+}
+function viewQuestionsByPointID(ele){
   var locatid = document.getElementById("locat-id").value;
   var roleid = document.getElementById("role-id").value;
   var userid = document.getElementById("user-id").value;
+  var track_type = document.getElementById("track-type").value;
   if(locatid == '' || locatid == undefined){
     alert.log("location id error");
   }
   $.ajax({ url: 'process_show_questions.php',
-               data: {param: ele.name, check:'review', locatID: locatid, roleID:roleid , userID: userid},
+               data: {param: ele.name, check:'review', locatID: locatid, roleID:roleid , userID: userid, trackType: track_type},
                type: 'post',
                success: function(output) {
-                            $('#side_bar').html(output);
+                            $('#right_bar').html(output);
                             $("input[type='radio']").click(function(){
                     $.ajax({ url: 'process_show_questions.php',
-                         data: {questionid: this.id, check: 'update',param:this.className, value: this.value, locatID: locatid, roleID:roleid, userID: userid},
+                         data: {questionid: this.id, check: 'update',param:this.className, value: this.value, locatID: locatid, roleID:roleid, userID: userid, trackType: track_type},
                          type: 'post',
                          success: function(output) {
-                                      $('#side_bar').html(output);
+                                      $('#right_bar').html(output);
                                       
                           }
                     });

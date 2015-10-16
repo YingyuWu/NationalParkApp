@@ -41,7 +41,7 @@ require_once('includes/db_conn.php');
 //     }
 // }else 
 if($check == 'review'){
-	$query = "SELECT * FROM `AdventureTracksPoints` WHERE ID = '".$locat_ID."'";
+	$query = "SELECT * FROM `Location` WHERE ID = '".$locat_ID."'";
 	$result = $dbc->query($query);
     if(!$result){
         echo "System Error";
@@ -54,11 +54,14 @@ if($check == 'review'){
         	//$count++;
         	//$check = $row['available']
         		echo "<p>".$row['Title']."</p><br><h3>Description</h3><p>".$row['Description']."</p>
-        		<br><p><h3> Location</h3>".$row['Latitude']." , ".$row['Longitude']."</p>";
+        		<br><p><h3> Location</h3>".$row['Latitude']." , ".$row['Longitude']."</p><div id='description_menu' style='width:50%;float:left; border-left:1px solid grey'>
+                <ul style='border:0px;'><li><a>Add Text/Image Questions</a></li><li><a>Add Single Choice Questions</a></li><li><a>Add Multiple Choice Questions</a></li><li><a>Add Correct Order Questions</a></li><li><a>Add Match Questions</a></li><li><a>Add Fill In Questions</a></li><li><a>Add Information</a></li></ul></div>
+                <div id='description_menu' style='width:50%;float:right'>
+                <ul class='normalul'><li><a>View Text/Image Questions</a></li><li><a>View Single Choice Questions</a></li><li><a>View Multiple Choice Questions</a></li><li><a>View Correct Order Questions</a></li><li><a>View Match Questions</a></li><li><a>View Fill In Questions</a></li><li><a>View Information</a></li></ul></div>";
         	
         }
     }else{
-        echo "<tr><td>Description is empty. <a>Add New</a></td></tr>";
+        echo "<tr><td>Description is empty.</td></tr>";
     }
     //echo "<a>Edit</a>";
 

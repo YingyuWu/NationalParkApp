@@ -13,11 +13,13 @@ if($locat_ID == ''){
 //connect to the database
 require_once('includes/db_conn.php');
 
-$query1 = "SELECT * FROM questions WHERE Locat_ID='".$locat_ID."' AND available = '1'";
-$query2 = "SELECT * FROM FillQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1'";
-$query3 = "SELECT * FROM singleQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1'";
-$query4 = "SELECT * FROM multiQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1'";
-$query5 = "SELECT * FROM orderQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1'";
+$query1 = "SELECT * FROM questions WHERE Locat_ID='".$locat_ID."' AND available = '1' AND Question_Type='0'";
+$query2 = "SELECT * FROM FillQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1' AND Question_Type='0'";
+$query3 = "SELECT * FROM singleQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1' AND Question_Type='0'";
+$query4 = "SELECT * FROM multiQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1' AND Question_Type='0'";
+$query5 = "SELECT * FROM orderQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1' AND Question_Type='0'";
+$query6 = "SELECT * FROM matchQuestions WHERE Locat_ID='".$locat_ID."' AND available = '1' AND Question_Type='0'";
+$query7 = "SELECT * FROM factInformation WHERE Locat_ID='".$locat_ID."' AND available = '1' AND Question_Type='0'";
 $query = "SELECT Longitude,Latitude FROM Location WHERE ID='".$locat_ID."'";
 $obj = new stdClass();
 $obj->QuestionType = "Question";

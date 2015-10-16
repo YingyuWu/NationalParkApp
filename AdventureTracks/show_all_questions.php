@@ -14,6 +14,10 @@ $track_type = $_GET['trackType'];
 if($track_type == ''){
   $track_type = 1;
 }
+$question_type= $_GET['Type'];
+if($question_type == ''){
+  $question_type = "text";
+}
 require_once('includes/db_conn.php');
 $query1 = "SELECT * FROM `AdventureTracksPoints` WHERE User_ID = '".$userid."' AND Track_Type = '".$track_type."'";
 $query2 = "SELECT * FROM `AdventureTracks` WHERE ID = '".$track_type."'";//Default Setting for index page
@@ -31,7 +35,6 @@ if($result->num_rows > 0){
 }
 ?>
 <script type="text/javascript">
-
 function init(){
   var user_id = <?php echo json_encode($userid); ?>;
   var role_id = <?php echo json_encode($roleid); ?>;
@@ -63,13 +66,13 @@ function init(){
 	<div class="left">
 	     <ul>
        <li><a onclick="viewPoints(this)">Points</a></li>
-       <li><a name="text" onclick="viewQuestions(this)">Text/Image Questions</a></li>
-       <li><a name="fill" onclick="viewQuestions(this)">Fill In Questions</a></li>
-       <li><a name="single" onclick="viewQuestions(this)">Single Choice Questions</a></li>
-       <li><a name="multi" onclick="viewQuestions(this)">Multiple Choice Questions</a></li>
-       <li><a name="match" onclick="viewQuestions(this)">Match Questions</a></li>
-       <li><a name="order" onclick="viewQuestions(this)">Correct Order Questions</a></li>
-       <li><a name="fact" onclick="viewQuestions(this)">Information</a></li>
+       <li><a>Text/Image Questions</a></li>
+       <li><a>Fill In Questions</a></li>
+       <li><a>Single Choice Questions</a></li>
+       <li><a>Multiple Choice Questions</a></li>
+       <li><a>Match Questions</a></li>
+       <li><a>Correct Order Questions</a></li>
+       <li><a>Information</a></li>
        </ul>
 	</div>
 	<div class="wrappermiddle">
@@ -94,15 +97,6 @@ function viewPoints(ele){
   var roleid = document.getElementById("role-id").value;
   var track_type = document.getElementById("track-type").value;
   var url = "map.php?userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type;
-  window.location = url;
-}
-
-function viewQuestions(ele){
-  var roleid = document.getElementById("role-id").value;
-  var userid = document.getElementById("user-id").value;
-  var track_type = document.getElementById("track-type").value;
-  var type = ele.name;
-  var url = "show_questions.php?userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type + "&Type=" + type;
   window.location = url;
 }
 </script>

@@ -37,7 +37,6 @@ if($type == 'order'){
     }
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
-            if($row['type'] == '1'){
                 $orderType = $row['type'];
                 $question = $row['question'];
                 $order1 = $row['order1'];
@@ -46,19 +45,7 @@ if($type == 'order'){
                 $order4 = $row['order4'];
                 $link = $row['link'];
                 $url = $row['image_url1'];
-                $available = $row['available'];
-            }else if($row['type'] == '0'){
-                $orderType = $row['type'];
-                $question = $row['question'];
-                $order1 = $row['image1'];
-                $order2 = $row['image2'];
-                $order3 = $row['image3'];
-                $order4 = $row['image4'];
-                $link = $row['link'];
-                $url = $row['image_url1'];
-                $available = $row['available'];
-            }
-            
+                $available = $row['available'];  
         }
     }
 }else{

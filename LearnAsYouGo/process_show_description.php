@@ -51,14 +51,17 @@ if($check == 'review'){
         //Fetch rows
         echo "<div style='width:100%; padding-left:10px'><h3>Title</h3> ";
         while($row = $result->fetch_assoc()){
-        	//$count++;
-        	//$check = $row['available']
-        		echo "<p>".$row['Title']."</p><br><h3>Description</h3><p>".$row['Description']."</p>
-        		<br><p><h3> Location</h3>".$row['Latitude']." , ".$row['Longitude']."</p>";
-        	
+            if($row['Location_type'] == '1'){
+                echo "This is an Adventure Track Point.";
+            }else{
+                echo "<p>".$row['Title']."</p><br><h3>Description</h3><p>".$row['Description']."</p>
+                <br><p><h3> Location</h3>".$row['Latitude']." , ".$row['Longitude']."</p>";
+            }
+                
+            	
         }
     }else{
-        echo "<tr><td>Description is empty. <a>Add New</a></td></tr>";
+        echo "<tr><td>Description is empty.</td></tr>";
     }
     //echo "<a>Edit</a>";
 

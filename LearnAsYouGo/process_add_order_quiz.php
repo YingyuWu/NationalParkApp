@@ -59,7 +59,7 @@ if($type == '1'){
 			 
 }else if($type == '0'){
 	$query = "INSERT INTO orderQuestions
-			(questionid, question, image1,image2,image3,image4,available, Locat_ID,link,type)
+			(questionid, question, order1,order2,order3,order4,available, Locat_ID,link,type)
 			 VALUES (NULL, '".$question."','".$correct_order_1."','".$correct_order_2."','".$correct_order_3."','".$correct_order_4."','1', '".$locatid."','".$link."','".$type."')";
 }
 if($query == ''){

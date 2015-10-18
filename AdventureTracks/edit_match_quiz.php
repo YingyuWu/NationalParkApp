@@ -10,6 +10,11 @@ if($roleid == ''){
     echo "Role ID is invalid";
     exit();
 }
+$track_type = $_GET['trackType'];
+if($track_type == ''){
+  echo "Track Type is invalid";
+  exit();
+}
 $type = ($_GET['type']);
 $questionid = ($_GET['id']);
 $edit = ($_GET['edit']);
@@ -47,6 +52,7 @@ if($type == 'match'){
             $url = $row['image_url1'];
             $available = $row['available'];
             $response_wrong = $row['response_wrong'];
+            $locatid = $row['Locat_ID'];
         }
     }
 }else{
@@ -54,68 +60,95 @@ if($type == 'match'){
     exit();
 }
 ?>
+<?php include('includes/left_menu.html'); ?>
+    <div class="wrappermiddle">
+        <div class="middle" id="main-content">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-8">
+                <h1>Edit/Delete Match Questions</h1>
+                    <form action="process_edit_match_quiz.php" method="post">
+                        <div class="form-group" style="padding-top:20px;">
+                            <label for="question">Question</label>
+                            <input type="text" class="form-control" id="question" name="question" value="<?= $question ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="wrong_answer">Left Title</label>
+                            <input type="text" class="form-control" id="left_title" name="left_title" value="<?= $left_title ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="correct_answer">Left Options</label>
+                            <input type="text" class="form-control" id="left_options" name="left_options" value="<?= $left_options ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="wrong_answer">Right Title</label>
+                            <input type="text" class="form-control" id="right_title" name="right_title" value="<?= $right_title ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="correct_answer">Right Options (right options should put in the order that match the left options)</label>
+                            <input type="text" class="form-control" id="right_options" name="right_options" value="<?= $right_options ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="correct_answer">Response For Correct Answers</label>
+                            <input type="text" class="form-control" id="response" name="response" value="<?= $response ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="correct_answer">Response For Wrong Answers</label>
+                            <input type="text" class="form-control" id="response_wrong" name="response_wrong" value="<?= $response_wrong ?>">
+                        </div>
+                        <!--<div class="form-group">
+                            <label for="input">Visitor's Answer</label>
+                            <input type="text" class="form-control" id="user_input" name="user_input"  value="<?= $input ?>">
+                        </div>-->
+                        <div class="form-group">
+                            <label for="correct_answer">Link(Optional)</label>
+                            <input type="text" class="form-control" id="link" name="link" value="<?= $url ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="correct_answer">Image(Optional)</label>
+                            <input type="text" class="form-control" id="image-url1" name="image-url1" value="<?= $image ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">Availablity (Please enter the 0 or 1)</label>
+                            <input type="text" style="width:50px;" class="form-control" id="available" name="type"  value="<?= $available ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="correct_answer">Point ID(Optional)</label>
+                            <input type="text" class="form-control" id="locat-id" name="locat_id" placeholder="Enter point id here">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large" value="submit" id="submit" name="submit"><?= $modified ?></button>
+                        <input type="hidden" name="hidden" id="hidden" value="<?= $edit ?>">
+                        <input type="hidden" id="questionid" name="questionid"value="<?= $questionid ?>">
+                        <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
+                        <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
+                        <input type="hidden" name="track_type" id="track-type" value="<?=$track_type ?>">
+
+                    </form>
+                </div>
+                 </div>
+</div>
+</div>
+
+
 <script type="text/javascript">
 var user_id = <?php echo json_encode($userid); ?>;
 var role_id = <?php echo json_encode($roleid); ?>;
+var track_type = <?php echo json_encode($track_type); ?>;
+var locat_id = <?php echo json_encode($locatid); ?>;
 document.getElementById("header-user-id").value = user_id;
 document.getElementById("header-role-id").value = role_id;
+if(locat_id != '' && locat_id != undefined && locat_id != '0'){
+    document.getElementById("locat-id").value = locat_id;
+}   
+
+function viewQuestions(ele){
+  var type = ele.name;
+  var url = "show_questions.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type + "&Type=" + type;
+  window.location = url;
+}
+
+function viewPoints(ele){
+  var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
+  window.location = url;
+}
 </script>
-<div class="row">
-    <div class="col-md-offset-2 col-md-8">
-    <h1>Edit Match Questions</h1>
-        <form action="process_edit_match_quiz.php" method="post">
-            <div class="form-group" style="padding-top:20px;">
-                <label for="question">Question</label>
-                <input type="text" class="form-control" id="question" name="question" value="<?= $question ?>">
-            </div>
-            <div class="form-group">
-                <label for="wrong_answer">Left Title</label>
-                <input type="text" class="form-control" id="left_title" name="left_title" value="<?= $left_title ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Left Options</label>
-                <input type="text" class="form-control" id="left_options" name="left_options" value="<?= $left_options ?>">
-            </div>
-            <div class="form-group">
-                <label for="wrong_answer">Right Title</label>
-                <input type="text" class="form-control" id="right_title" name="right_title" value="<?= $right_title ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Right Options (right options should put in the order that match the left options)</label>
-                <input type="text" class="form-control" id="right_options" name="right_options" value="<?= $right_options ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Response For Correct Answers</label>
-                <input type="text" class="form-control" id="response" name="response" value="<?= $response ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Response For Wrong Answers</label>
-                <input type="text" class="form-control" id="response_wrong" name="response_wrong" value="<?= $response_wrong ?>">
-            </div>
-            <!--<div class="form-group">
-                <label for="input">Visitor's Answer</label>
-                <input type="text" class="form-control" id="user_input" name="user_input"  value="<?= $input ?>">
-            </div>-->
-            <div class="form-group">
-                <label for="correct_answer">Link(Optional)</label>
-                <input type="text" class="form-control" id="link" name="link" value="<?= $url ?>">
-            </div>
-            <div class="form-group">
-                <label for="correct_answer">Image(Optional)</label>
-                <input type="text" class="form-control" id="image-url1" name="image-url1" value="<?= $image ?>">
-            </div>
-            <div class="form-group">
-                <label for="type">Availablity (Please enter the 0 or 1)</label>
-                <input type="text" style="width:50px;" class="form-control" id="available" name="type"  value="<?= $available ?>">
-            </div>
-            <button type="submit" class="btn btn-primary btn-large" value="submit" id="submit" name="submit"><?= $modified ?></button>
-            <input type="hidden" name="hidden" id="hidden" value="<?= $edit ?>">
-            <input type="hidden" id="questionid" name="questionid"value="<?= $questionid ?>">
-            <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
-            <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
-
-        </form>
-    </div>
-     </div>
-
 <?php include('includes/footer.html'); ?>

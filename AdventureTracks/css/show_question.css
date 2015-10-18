@@ -3,11 +3,11 @@ div, ul,li,a  {margin:0; padding:0;}
 	ul li {float:left;}
 	ul li a {color:#222;display:block;padding:6px 15px;text-decoration:none;border-right:1px solid;border-top:1px solid ;border-right:1px solid; border-bottom:1px solid;}
 	ul li a.selected  {border-bottom:1px solid #fff;color:white;background:black;}
-	h1 {display:block;width:600px;margin:0 auto;padding:20px 0;color:#fff;}
+
 	#navigation {width:90%; margin: 0 auto; }
 	#content {width:90%; margin:0 auto;height:200px;background:#fff;border:1px solid;z-index:1;text-align:center;padding:0 0; overflow-y:auto; height:800px;}
 	#query_result { width: 100%;}
-	#query_result tr{border-bottom:1px solid black;}
+	#query_result tr{border-bottom:1px solid black; border-top:1px solid black;}
 	#query_result td{border-left:1px solid black; width:25%;text-align:center;}
 	#description_menu a{border:0px; color:blue;}
 

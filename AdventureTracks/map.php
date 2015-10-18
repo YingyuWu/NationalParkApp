@@ -7,11 +7,7 @@ include('includes/header.html');
 <head> 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
-    <title>Google Maps Javascript API v3 Example: Adding a clickable sidebar</title> 
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/show_question.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
 <style type="text/css">
 html, body { height: 100%; } 
  
@@ -199,7 +195,7 @@ function createMarker(latlng, name, html) {
   
     var side_content = "<h2 style='padding-left:10px;'>List Of Points</h2>";
     titles.forEach(function(des,i){
-        side_content += "&nbsp;&nbsp;<img style='width:20px; height:30px' src='images/marker.png'>&nbsp;<a name='"+ locat_id[i] +"' onclick='viewPointDescription(this)'>" + des + "</a><br>"; 
+        side_content += "&nbsp;&nbsp;<img style='width:20px; height:30px' src='images/marker.png'>&nbsp;<a name='"+ locat_id[i] +"' onclick='viewPointDescription(this)'>Point ID: " + locat_id[i] + " " + des + "</a><br>"; 
     })
     side_bar_html = side_content;
     right_bar_html = "<p>&nbsp;&nbsp;Click on points to view description!</p>";
@@ -213,19 +209,7 @@ function createMarker(latlng, name, html) {
 
 
 <body > 
- <div class="main"> 
-  <div class="left">
-       <ul>
-       <li><a onclick="viewPoints(this)">Points</a></li>
-       <li><a name="text" onclick="viewQuestions(this)">Text/Image Questions</a></li>
-       <li><a name="fill" onclick="viewQuestions(this)">Fill In Questions</a></li>
-       <li><a name="single" onclick="viewQuestions(this)">Single Choice Questions</a></li>
-       <li><a name="multi" onclick="viewQuestions(this)">Multiple Choice Questions</a></li>
-       <li><a name="match" onclick="viewQuestions(this)">Match Questions</a></li>
-       <li><a name="order" onclick="viewQuestions(this)">Correct Order Questions</a></li>
-       <li><a name="fact" onclick="viewQuestions(this)">Information</a></li>
-       </ul>
-  </div>
+ <?php include('includes/left_menu.html'); ?>
   <div class="wrappermiddle">
     <div class="middle" id="main-content">
          <!-- you can use tables or divs for the overall layout --> 
@@ -257,6 +241,7 @@ function viewPointDescription(ele){
   var id = ele.name;
   var roleid = document.getElementById("role-id").value;
   var userid = document.getElementById("user-id").value;
+  document.getElementById("locat-id").value = id;
   viewDescription(id);
 }
 function viewPoints(ele){
@@ -284,8 +269,11 @@ function filterPoints(ele){
   filterClick(filterpoint);
 }
 function viewDescription(locatid){
+  var roleid = document.getElementById("role-id").value;
+  var userid = document.getElementById("user-id").value;
+  var track_type = document.getElementById("track-type").value;
   $.ajax({ url: 'process_show_description.php',
-               data: {check:'review',locatID: locatid},
+               data: {check:'review',locatID: locatid,roleID:roleid , userID: userid, trackType: track_type},
                type: 'post',
                success: function(output) {
                     $('#right_bar').html(output);
@@ -330,24 +318,22 @@ function addQuestions(ele){
   var locatid = document.getElementById("locat-id").value;
   var userid = document.getElementById("user-id").value;
   var roleid = document.getElementById("role-id").value;
-  if(locatid == '' || locatid == undefined){
-    alert.log("location id error");
-  }
+  var track_type = document.getElementById("track-type").value;
   var url;
   if(ele.name == 'text'){
-    url = "add_Text_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_Text_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type;
   }else if(ele.name == 'fill'){
-    url = "add_fill_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_fill_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'order'){
-    url = "add_Order_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_Order_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'single'){
-    url = "add_single_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_single_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'multi'){
-    url = "add_multi_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_multi_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'fact'){
-    url = "add_fact_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_fact_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'match'){
-    url = "add_match_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_match_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }
   if(url == undefined || url == ""){
     return;

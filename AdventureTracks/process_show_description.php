@@ -6,6 +6,9 @@ ini_set('display_errors', 'off');
 $check = ($_POST['check']);
 $locat_ID = ($_POST['locatID']);
 $query = '';
+$role_id = ($_POST['roleID']);
+$user_id = ($_POST['userID']);
+$track_type = ($_POST['trackType']);
 
 //connect to the database
 require_once('includes/db_conn.php');
@@ -55,9 +58,9 @@ if($check == 'review'){
         	//$check = $row['available']
         		echo "<p>".$row['Title']."</p><br><h3>Description</h3><p>".$row['Description']."</p>
         		<br><p><h3> Location</h3>".$row['Latitude']." , ".$row['Longitude']."</p><div id='description_menu' style='width:50%;float:left; border-left:1px solid grey'>
-                <ul style='border:0px;'><li><a>Add Text/Image Questions</a></li><li><a>Add Single Choice Questions</a></li><li><a>Add Multiple Choice Questions</a></li><li><a>Add Correct Order Questions</a></li><li><a>Add Match Questions</a></li><li><a>Add Fill In Questions</a></li><li><a>Add Information</a></li></ul></div>
+                <ul style='border:0px;'><li><a name='text' onclick='addQuestions(this)'>Add Text/Image Questions</a></li><li><a name='single' onclick='addQuestions(this)'>Add Single Choice Questions</a></li><li><a name='multi' onclick='addQuestions(this)'>Add Multiple Choice Questions</a></li><li><a name='order' onclick='addQuestions(this)'>Add Correct Order Questions</a></li><li><a name='match' onclick='addQuestions(this)'>Add Match Questions</a></li><li><a name='fill' onclick='addQuestions(this)'>Add Fill In Questions</a></li><li><a name='fact' onclick='addQuestions(this)'>Add Information</a></li></ul></div>
                 <div id='description_menu' style='width:50%;float:right'>
-                <ul class='normalul'><li><a>View Text/Image Questions</a></li><li><a>View Single Choice Questions</a></li><li><a>View Multiple Choice Questions</a></li><li><a>View Correct Order Questions</a></li><li><a>View Match Questions</a></li><li><a>View Fill In Questions</a></li><li><a>View Information</a></li></ul></div>";
+                <ul class='normalul'><li><a name='text' onclick='viewQuestionsByPointID(this)'>View Text/Image Questions</a></li><li><a name='single' onclick='viewQuestionsByPointID(this)'>View Single Choice Questions</a></li><li><a name='multi' onclick='viewQuestionsByPointID(this)'>View Multiple Choice Questions</a></li><li><a name='order' onclick='viewQuestionsByPointID(this)'>View Correct Order Questions</a></li><li><a name='match' onclick='viewQuestionsByPointID(this)'>View Match Questions</a></li><li><a name='fill' onclick='viewQuestionsByPointID(this)'>View Fill In Questions</a></li><li><a name='fact' onclick='viewQuestionsByPointID(this)'>View Information</a></li></ul></div>";
         	
         }
     }else{
@@ -72,3 +75,4 @@ if($query == ''){
 }
 $dbc->close();
 ?>
+

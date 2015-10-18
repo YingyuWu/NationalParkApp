@@ -67,13 +67,14 @@ if($question_type == ''){
                data: {param: questiontype, check:'all', roleID:roleid , userID: userid, trackType: track_type},
                type: 'post',
                success: function(output) {
-                            $('#main-content').html(output);
+                            var content = "<input type='button' style='background-color:grey;color:white; font-size:18px' name='" + questiontype + "' onclick='addQuestions(this)' value='Add New Question'><br>";
+                            $('#main-content').html(content + output);
                             $("input[type='radio']").click(function(){
                     $.ajax({ url: 'process_show_questions.php',
                          data: {questionid: this.id, check: 'update',param:this.className, value: this.value, roleID:roleid, userID: userid, trackType: track_type, extra:'all'},
                          type: 'post',
                          success: function(output) {
-                                      $('#main-content').html(output);
+                                      $('#main-content').html(content + output);
                                       
                           }
                     });
@@ -90,27 +91,26 @@ function viewPoints(ele){
 }
 
 function addQuestions(ele){
-  var locatid = document.getElementById("locat-id").value;
+  var locatid = '';//no location specific
   var userid = document.getElementById("user-id").value;
   var roleid = document.getElementById("role-id").value;
-  if(locatid == '' || locatid == undefined){
-    alert.log("location id error");
-  }
+  var url;
+  var track_type = document.getElementById("track-type").value;
   var url;
   if(ele.name == 'text'){
-    url = "add_Text_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_Text_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type;
   }else if(ele.name == 'fill'){
-    url = "add_fill_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_fill_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'order'){
-    url = "add_Order_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_Order_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'single'){
-    url = "add_single_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_single_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'multi'){
-    url = "add_multi_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_multi_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'fact'){
-    url = "add_fact_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_fact_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }else if(ele.name == 'match'){
-    url = "add_match_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid;
+    url = "add_match_quiz.php?locatID=" + locatid + "&userID=" + userid + "&roleID=" + roleid+ "&trackType=" + track_type;
   }
   if(url == undefined || url == ""){
     return;

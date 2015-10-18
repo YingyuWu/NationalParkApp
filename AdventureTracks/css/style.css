@@ -32,6 +32,8 @@
   // background-color: white;
    height: 750px;
    padding-left:10px;
+   overflow-y:auto;
+   overflow-x:hidden;
 }
 .description{
    color:black;

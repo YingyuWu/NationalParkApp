@@ -8,7 +8,7 @@
     <meta name="description" content="POI QUIZ">
     <meta name="author" content="Chao">   
     <title>Interpo System</title>
-
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
@@ -33,10 +33,10 @@
         <div style="margin-left:-50px"class="navbar-collapse collapse">
           <ul  style="height:100px;"class="nav navbar-nav" >
             <!--<li ><a style="color:white">Adventure Tracks</a></li>-->
-            <li class="active"><a name="1" style="background-image:url('images/ledgesWeathering.png');height:100px; width:200px"onclick="linkToMap(this)" ></a></li>
-            <li ><a  name="3" style="background-image:url('images/fallColor.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
-            <li ><a  name="2" style="background-image:url('images/ledgesMicrohabitat.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
-            <li ><a  style="background-image:url('images/coming.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
+            <li id="1" class="active"><a name="1" style="background-image:url('images/ledgesWeathering.png');height:100px; width:200px"onclick="linkToMap(this)" ></a></li>
+            <li id="2"><a  name="2" style="background-image:url('images/ledgesMicrohabitat.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
+            <li id="3"><a  name="3" style="background-image:url('images/fallColor.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
+            <li id="4"><a  style="background-image:url('images/coming.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
           <!--<li><a href="#">Show</a></li> 
             <li><a href="add_Description.php">Description and link</a></li>
             <li><a href="add_Text_quiz.php">Text Question</a></li>
@@ -58,6 +58,8 @@
 
     <script type="text/javascript">
       function linkToMap(ele){
+        $( "li" ).removeClass( "active" );
+        ele.parentElement.className = "active";
         var userid = document.getElementById("header-user-id").value;
         var roleid = document.getElementById("header-role-id").value;
         if(userid == 'empty' || roleid == 'empty'){

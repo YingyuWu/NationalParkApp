@@ -54,24 +54,9 @@ function init(){
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
     <title>Adventure Tracks</title> 
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/show_question.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body onload="init()">
-<div class="main"> 
-	<div class="left">
-	     <ul>
-       <li><a onclick="viewPoints(this)">Points</a></li>
-       <li><a name="text" onclick="viewQuestions(this)">Text/Image Questions</a></li>
-       <li><a name="fill" onclick="viewQuestions(this)">Fill In Questions</a></li>
-       <li><a name="single" onclick="viewQuestions(this)">Single Choice Questions</a></li>
-       <li><a name="multi" onclick="viewQuestions(this)">Multiple Choice Questions</a></li>
-       <li><a name="match" onclick="viewQuestions(this)">Match Questions</a></li>
-       <li><a name="order" onclick="viewQuestions(this)">Correct Order Questions</a></li>
-       <li><a name="fact" onclick="viewQuestions(this)">Information</a></li>
-       </ul>
-	</div>
+<?php include('includes/left_menu.html'); ?>
 	<div class="wrappermiddle">
 		<div class="middle" id="main-content">
 

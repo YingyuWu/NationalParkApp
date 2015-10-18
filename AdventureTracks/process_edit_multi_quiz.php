@@ -2,8 +2,15 @@
 error_reporting(-1);
 ini_set('display_errors', 'off');
 include('includes/header.html');
+include('includes/left_menu.html');
 $userid = $_POST['userid'];
 $roleid = $_POST['roleid'];
+$track_type = $_POST['track_type'];
+if($track_type == ''){
+	echo "Track Type is Empty";
+	exit();
+}
+$locatid = $_POST['locat_id'];
 //Check for empty fields
 //Create short variables
 $question = $_POST['question'];
@@ -51,13 +58,15 @@ if($response_wrong == ''){
 }
 require_once('includes/db_conn.php');
 //,`user_input` = '".$input."'
-$query_update = "UPDATE `parkapps`.`multiQuestions` SET `question` = '".$question."', `link` = '".$link."', `image_url1` = '".$url."',`available` = '".$available."',`correct_answer` = '".$correct_answer."',`options` = '".$options."',`response` = '".$response."' ,`response_wrong` = '".$response_wrong."' WHERE `multiQuestions`.`questionid` = '".$questionid."';";
+$query_update = "UPDATE `parkapps`.`multiQuestions` SET `question` = '".$question."', `link` = '".$link."', `image_url1` = '".$url."',`available` = '".$available."',`correct_answer` = '".$correct_answer."',`options` = '".$options."',`response` = '".$response."' ,`response_wrong` = '".$response_wrong."' ,`Locat_ID` = '".$locatid."'WHERE `multiQuestions`.`questionid` = '".$questionid."';";
 $query_delete = "DELETE FROM `parkapps`.`multiQuestions` WHERE `multiQuestions`.`questionid` = '".$questionid."'";
 if($modified == 'edit'){
 	$result = $dbc->query($query_update);
 
 	if($result){
-	    echo "Information has been saved<br><a href='map.php?userID=".$userid."&roleID=".$roleid."'>Go Back</a>";
+	    echo "<div class='wrappermiddle'>
+        <div class='middle' id='main-content'>Information has been saved<br><a href='main.php?userID=".$userid."&roleID=".$roleid."&trackType=".$track_type."'>Go Back</a>
+        </div></div>";
 	} else {
 	    echo '<h1>System Error</h1>';
 	}
@@ -66,7 +75,9 @@ if($modified == 'edit'){
 	$result = $dbc->query($query_delete);
 
 	if($result){
-	    echo "Information has been saved<br><a href='map.php?userID=".$userid."&roleID=".$roleid."'>Go Back</a>";
+	    echo "<div class='wrappermiddle'>
+        <div class='middle' id='main-content'>Information has been saved<br><a href='main.php?userID=".$userid."&roleID=".$roleid."&trackType=".$track_type."'>Go Back</a>
+        </div></div>";
 	} else {
 	    echo '<h1>System Error</h1>';
 	}
@@ -78,6 +89,18 @@ include('includes/footer.html');
 <script type="text/javascript">
 var user_id = <?php echo json_encode($userid); ?>;
 var role_id = <?php echo json_encode($roleid); ?>;
+var track_type = <?php echo json_encode($track_type); ?>;
 document.getElementById("header-user-id").value = user_id;
 document.getElementById("header-role-id").value = role_id;
+
+function viewQuestions(ele){
+  var type = ele.name;
+  var url = "show_questions.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type + "&Type=" + type;
+  window.location = url;
+}
+
+function viewPoints(ele){
+  var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
+  window.location = url;
+}
 </script>

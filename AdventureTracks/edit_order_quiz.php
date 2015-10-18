@@ -186,15 +186,20 @@ if(locat_id != '' && locat_id != undefined && locat_id != '0'){
     document.getElementById("locat-id2").value = locat_id;
 }   
 
-function showText(){
-    document.getElementById("form2").style.display = "none";
-    document.getElementById("form1").style.display = "inline";
+function init(){
+    var orderType = <?php echo json_encode($orderType); ?>;
+    if(orderType == '1'){
+        document.getElementById("form1").style.display = "inline";
+        document.getElementById("form2").style.display = "none";
+    }else if(orderType == '0'){
+        document.getElementById("form1").style.display = "none";
+        document.getElementById("form2").style.display = "inline";
+    }
 }
-function showImage(){
-    document.getElementById("form1").style.display = "none";
-    document.getElementById("form2").style.display = "inline";
+  $(document).ready(function(){
+    init();
+  });
 
-}
 function viewQuestions(ele){
   var type = ele.name;
   var url = "show_questions.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type + "&Type=" + type;

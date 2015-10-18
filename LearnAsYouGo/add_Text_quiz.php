@@ -25,7 +25,7 @@ document.getElementById("header-role-id").value = role_id;
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
         <h1>Add Text/Image Questions</h1>
-        <form action="process_quizAdd.php" method="post">
+        <form action="process_quizAdd.php" method="post" id="form">
             <div class="form-group" style="padding-top:20px;">
                 <label for="question">Question</label>
                 <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
@@ -67,10 +67,24 @@ document.getElementById("header-role-id").value = role_id;
                 <input type="text" class="form-control" id="wrong_answer3" name="wrong_answer3" placeholder="Wrong answer 3">
             </div>
             -->
-            <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Information</button>
+            <button type="button"  onclick="submitForm()" class="btn btn-primary btn-large" value="submit" >+ Add Information</button>
 
         </form>
     </div>
      </div>
 
     <?php include('includes/footer.html') ?>
+	<script type="text/javascript">
+	function submitForm(){
+		var question = document.getElementById("question").value;
+		var correct = document.getElementById("correct_answer").value;
+		var self = this;
+		if(question == '' || question == undefined || question.trim() == ''){
+			alert("Question is empty");
+		}else if(correct == '' || correct == undefined|| correct.trim() == ''){
+			alert("Response is empty");
+		}else{
+			self.form.submit();
+		}
+	}
+</script>

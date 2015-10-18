@@ -56,7 +56,9 @@ document.getElementById("header-role-id").value = role_id;
                 <input type="text" class="form-control" id="image-url1" name="image-url1" placeholder="Enter image url here">
             </div>
             <input type="hidden" name="locatid" id="hidden" value="<?=$locatid ?>">
-            <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Information</button>
+            <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
+            <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
+            <button type="button" onclick="submitForm()" class="btn btn-primary btn-large" value="submit" >+ Add Information</button>
 
         </form>
 
@@ -88,7 +90,7 @@ document.getElementById("header-role-id").value = role_id;
             <input type="hidden" name="locatid" id="hidden" value="<?=$locatid ?>">
             <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
             <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
-            <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Information</button>
+            <button type="button" onclick="submitForm2()" class="btn btn-primary btn-large" value="submit" >+ Add Information</button>
 
         </form>
     </div>
@@ -103,5 +105,49 @@ function showImage(){
     document.getElementById("form2").style.display = "inline";
 
 }
+function submitForm(){
+    var question = document.getElementById("question").value;
+    var correct1 = document.getElementById("correct_order_1").value;
+    var correct2 = document.getElementById("correct_order_2").value;
+    var correct3 = document.getElementById("correct_order_3").value;
+    var correct4 = document.getElementById("correct_order_4").value;
+    var self = this;
+    if(question == '' || question == undefined || question.trim() == ''){
+        alert("Question is empty");
+    }else if(correct1 == '' || correct1 == undefined|| correct1.trim() == ''){
+        alert("Correct order 1 is empty");
+    }else if(correct2 == '' || correct2 == undefined|| correct2.trim() == ''){
+        alert("Correct order 2 is empty");
+    }else if(correct3 == '' || correct3 == undefined|| correct3.trim() == ''){
+        alert("Correct order 3 is empty");
+    }else if(correct4 == '' || correct4 == undefined|| correct4.trim() == ''){
+        alert("Correct order 4 is empty");
+    }else{
+        self.form1.submit();
+    }
+}
+
+function submitForm2(){
+    var question = document.getElementsByName("question")[1].value;
+    var correct1 = document.getElementsByName("correct_order_1")[1].value;
+    var correct2 = document.getElementsByName("correct_order_2")[1].value;
+    var correct3 = document.getElementsByName("correct_order_3")[1].value;
+    var correct4 = document.getElementsByName("correct_order_4")[1].value;
+    var self = this;
+    if(question == '' || question == undefined || question.trim() == ''){
+        alert("Question is empty");
+    }else if(correct1 == '' || correct1 == undefined|| correct1.trim() == ''){
+        alert("Image 1 url is empty");
+    }else if(correct2 == '' || correct2 == undefined|| correct2.trim() == ''){
+        alert("Image 2 url is empty");
+    }else if(correct3 == '' || correct3 == undefined|| correct3.trim() == ''){
+        alert("Image 3 url is empty");
+    }else if(correct4 == '' || correct4 == undefined|| correct4.trim() == ''){
+        alert("Image 4 url is empty");
+    }else{
+        self.form2.submit();
+    }
+}
 </script>
     <?php include('includes/footer.html') ?>
+	

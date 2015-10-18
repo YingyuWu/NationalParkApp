@@ -65,7 +65,7 @@ if($type == 'single'){
         <div class="row">
             <div class="col-md-offset-2 col-md-8">
                 <h1>Edit/Delete Single Choice Questions</h1>
-                <form action="process_edit_single_quiz.php" method="post">
+                <form action="process_edit_single_quiz.php" method="post" id="form">
                     <div class="form-group" style="padding-top:20px;">
                         <label for="question"> Question</label>
                         <input type="text" class="form-control" id="question" name="question" value="<?= $question ?>">
@@ -107,7 +107,7 @@ if($type == 'single'){
                         <label for="correct_answer">Point ID(Optional)</label>
                         <input type="text" class="form-control" id="locat-id" name="locat_id" placeholder="Enter point id here">
                     </div>
-                    <button type="submit" class="btn btn-primary btn-large" value="submit" id="submit" name="submit"><?= $modified ?></button>
+                    <button type="button" onclick="submitForm()" class="btn btn-primary btn-large" value="submit"  ><?= $modified ?></button>
                     <input type="hidden" name="hidden" id="hidden" value="<?= $edit ?>">
                     <input type="hidden" id="questionid" name="questionid"value="<?= $questionid ?>">
                     <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
@@ -140,6 +140,30 @@ function viewQuestions(ele){
 function viewPoints(ele){
   var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
   window.location = url;
+}
+function submitForm(){
+    var question = document.getElementById("question").value;
+    var response = document.getElementById("response").value;
+    var response_wrong = document.getElementById("response_wrong").value;
+    var options = document.getElementById("options").value;
+    var correct = document.getElementById("correct_answer").value;
+    var available = document.getElementById("available").value;
+    var self = this;
+    if(question == '' || question == undefined || question.trim() == ''){
+        alert("Question is empty");
+    }else if(available == '' || available == undefined|| available.trim() == ''){
+        alert("Availability is empty, must be 0 or 1");
+    }else if(response == '' || response == undefined || response.trim() == ''){
+        alert("Response is empty");
+    }else if(response_wrong == '' || response_wrong == undefined|| response_wrong.trim() == ''){
+        alert("Response for wrong answer is empty");
+    }else if(options == '' || options == undefined|| options.trim() == ''){
+        alert("Options are empty");
+    }else if(correct == '' || correct == undefined|| correct.trim() == ''){
+        alert("Correct answer is empty");
+    }else{
+        self.form.submit();
+    }
 }
 </script>
     <?php include('includes/footer.html') ?>

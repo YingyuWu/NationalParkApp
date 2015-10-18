@@ -22,7 +22,7 @@ if($track_type == ''){
                 <div class="row">
                     <div class="col-md-offset-2 col-md-8">
                         <h1>Add fill in blank questions</h1>
-                        <form action="process_fill_quizAdd.php" method="post">
+                        <form action="process_fill_quizAdd.php" method="post" id="form">
                             <div class="form-group" style="padding-top:20px;">
                                 <label for="questionbeforefill">Question</label>
                                 <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
@@ -52,7 +52,7 @@ if($track_type == ''){
                             <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
                             <input type="hidden" name="roleid" id="hidden" value="<?=$roleid ?>">
                             <input type="hidden" name="track_type" id="track-type" value="<?=$track_type ?>">
-                            <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Information</button>
+                            <button type="button"  onclick="submitForm()" class="btn btn-primary btn-large" value="submit" >+ Add Information</button>
 
                         </form>
                     </div>
@@ -80,6 +80,22 @@ function viewQuestions(ele){
 function viewPoints(ele){
   var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
   window.location = url;
+}
+
+function submitForm(){
+    var question = document.getElementById("question").value;
+    var answershort = document.getElementById("answer-short").value;
+    var answerlong = document.getElementById("answer-long").value;
+    var self = this;
+    if(question == '' || question == undefined|| question.trim() == ''){
+        alert("Question is empty");
+    }else if(answershort == '' || answershort == undefined|| answershort.trim() == ''){
+        alert("Response short is empty");
+    }else if(answerlong == '' || answerlong == undefined|| answerlong.trim() == ''){
+        alert("Response long is empty");
+    }else{
+        self.form.submit();
+    }
 }
 </script>
     <?php include('includes/footer.html') ?>

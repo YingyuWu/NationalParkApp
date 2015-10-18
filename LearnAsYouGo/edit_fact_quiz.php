@@ -60,7 +60,7 @@ document.getElementById("header-role-id").value = role_id;
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
         <h1>Edit Information</h1>
-        <form action="process_edit_fact_quiz.php" method="post">
+        <form action="process_edit_fact_quiz.php" method="post" id="form">
             <div class="form-group" style="padding-top:20px;">
                 <label for="question"> Information</label>
                 <input type="text" class="form-control" id="question" name="question" value="<?= $question ?>">
@@ -78,7 +78,7 @@ document.getElementById("header-role-id").value = role_id;
                 <label for="type">Availablity (Please enter the 0 or 1)</label>
                 <input type="text" style="width:50px;" class="form-control" id="available" name="type"  value="<?= $available ?>">
             </div>
-            <button type="submit" class="btn btn-primary btn-large" value="submit" id="submit" name="submit"><?= $modified ?></button>
+            <button type="button" onclick="submitForm()" class="btn btn-primary btn-large" value="submit"><?= $modified ?></button>
             <input type="hidden" name="hidden" id="hidden" value="<?= $edit ?>">
             <input type="hidden" id="questionid" name="questionid"value="<?= $questionid ?>">
             <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
@@ -88,3 +88,17 @@ document.getElementById("header-role-id").value = role_id;
      </div>
 
     <?php include('includes/footer.html') ?>
+    <script type="text/javascript">
+        function submitForm(){
+            var question = document.getElementById("question").value;
+            var available = document.getElementById("available").value;
+            var self = this;
+            if(question == '' || question == undefined|| question.trim() == ''){
+                alert("Question is empty");
+            }else if(available == '' || available == undefined|| available.trim() == ''){
+                alert("Availability is empty, must be 0 or 1");
+            }else{
+                self.form.submit();
+            }
+        }
+    </script>

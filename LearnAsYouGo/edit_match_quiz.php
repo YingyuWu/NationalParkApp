@@ -63,7 +63,7 @@ document.getElementById("header-role-id").value = role_id;
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
     <h1>Edit Match Questions</h1>
-        <form action="process_edit_match_quiz.php" method="post">
+        <form action="process_edit_match_quiz.php" method="post" id="form">
             <div class="form-group" style="padding-top:20px;">
                 <label for="question">Question</label>
                 <input type="text" class="form-control" id="question" name="question" value="<?= $question ?>">
@@ -108,7 +108,7 @@ document.getElementById("header-role-id").value = role_id;
                 <label for="type">Availablity (Please enter the 0 or 1)</label>
                 <input type="text" style="width:50px;" class="form-control" id="available" name="type"  value="<?= $available ?>">
             </div>
-            <button type="submit" class="btn btn-primary btn-large" value="submit" id="submit" name="submit"><?= $modified ?></button>
+            <button type="button" onclick="submitForm()" class="btn btn-primary btn-large" value="submit" ><?= $modified ?></button>
             <input type="hidden" name="hidden" id="hidden" value="<?= $edit ?>">
             <input type="hidden" id="questionid" name="questionid"value="<?= $questionid ?>">
             <input type="hidden" name="userid" id="hidden" value="<?=$userid ?>">
@@ -119,3 +119,30 @@ document.getElementById("header-role-id").value = role_id;
      </div>
 
 <?php include('includes/footer.html'); ?>
+<script type="text/javascript">
+
+function submitForm(){
+    var question = document.getElementById("question").value;
+    var response = document.getElementById("response").value;
+    var response_wrong = document.getElementById("response_wrong").value;
+    var left = document.getElementById("left_options").value;
+    var right = document.getElementById("right_options").value;
+    var available = document.getElementById("available").value;
+    var self = this;
+    if(question == '' || question == undefined|| question.trim() == ''){
+        alert("Question is empty");
+    }else if(available == '' || available == undefined|| available.trim() == ''){
+        alert("Availability is empty, must be 0 or 1");
+    }else if(response == '' || response == undefined|| response.trim() == ''){
+        alert("Response is empty");
+    }else if(response_wrong == '' || response_wrong == undefined|| response_wrong.trim() == ''){
+        alert("response for wrong answer is empty");
+    }else if(left == '' || left == undefined|| left.trim() == ''){
+        alert("Left options are empty");
+    }else if(right == '' || right == undefined|| right.trim() == ''){
+        alert("Right options are empty");
+    }else{
+        self.form.submit();
+    }
+}
+</script>

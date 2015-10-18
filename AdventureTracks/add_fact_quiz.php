@@ -22,8 +22,8 @@ if($track_type == ''){
         <div class="middle" id="main-content">
                 <div class="row">
                     <div class="col-md-offset-2 col-md-8">
-                        <h1>Add Text Questions</h1>
-                        <form action="process_add_fact_quiz.php" method="post">
+                        <h1>Add Information</h1>
+                        <form action="process_add_fact_quiz.php" id="form" method="post">
                             <div class="form-group" style="padding-top:20px;">
                                 <label for="question">Information</label>
                                 <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
@@ -66,7 +66,7 @@ if($track_type == ''){
                                 <input type="text" class="form-control" id="wrong_answer3" name="wrong_answer3" placeholder="Wrong answer 3">
                             </div>
                             -->
-                            <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Information</button>
+                            <button type="button" onclick="submitForm()" class="btn btn-primary btn-large" value="submit">+ Add Information</button>
 
                         </form>
                     </div>
@@ -84,7 +84,8 @@ document.getElementById("header-user-id").value = user_id;
 document.getElementById("header-role-id").value = role_id;
 if(locat_id != '' && locat_id != undefined && locat_id != '0'){
     document.getElementById("locat-id").value = locat_id;
-}   
+} 
+
 
 function viewQuestions(ele){
   var type = ele.name;
@@ -95,6 +96,17 @@ function viewPoints(ele){
   var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
   window.location = url;
 }
+
+function submitForm(){
+    var question = document.getElementById("question").value;
+    var self = this;
+    if(question == '' || question == undefined|| question.trim() == ''){
+        alert("Question is empty");
+    }else{
+        self.form.submit();
+    }
+}
+
 </script>
 
     <?php include('includes/footer.html') ?>

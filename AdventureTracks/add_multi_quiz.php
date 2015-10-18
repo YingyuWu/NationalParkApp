@@ -23,7 +23,7 @@ if($track_type == ''){
                     <div class="row">
                         <div class="col-md-offset-2 col-md-8">
                         <h1>Multi Choice Questions</h1>
-                            <form action="process_add_multi_quiz.php" method="post">
+                            <form action="process_add_multi_quiz.php" method="post" id="form">
                                 <div class="form-group" style="padding-top:20px;">
                                     <label for="question">Question</label>
                                     <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question here">
@@ -70,7 +70,7 @@ if($track_type == ''){
                                     <input type="text" class="form-control" id="wrong_answer3" name="wrong_answer3" placeholder="Wrong answer 3">
                                 </div>
                                 -->
-                                <button type="submit" class="btn btn-primary btn-large" value="submit" name="submit">+ Add Information</button>
+                                <button type="button" onclick="submitForm()" class="btn btn-primary btn-large" value="submit">+ Add Information</button>
 
                             </form>
                         </div>
@@ -98,6 +98,27 @@ function viewQuestions(ele){
 function viewPoints(ele){
   var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
   window.location = url;
+}
+function submitForm(){
+    var question = document.getElementById("question").value;
+    var response = document.getElementById("response").value;
+    var response_wrong = document.getElementById("response_wrong").value;
+    var options = document.getElementById("options").value;
+    var correct = document.getElementById("correct_answer").value;
+    var self = this;
+    if(question == '' || question == undefined || question.trim() == ''){
+        alert("Question is empty");
+    }else if(response == '' || response == undefined || response.trim() == ''){
+        alert("Response is empty");
+    }else if(response_wrong == '' || response_wrong == undefined|| response_wrong.trim() == ''){
+        alert("Response for wrong answer is empty");
+    }else if(options == '' || options == undefined|| options.trim() == ''){
+        alert("Options are empty");
+    }else if(correct == '' || correct == undefined|| correct.trim() == ''){
+        alert("Correct answer is empty");
+    }else{
+        self.form.submit();
+    }
 }
 </script>
 <?php include('includes/footer.html'); ?>

@@ -5,6 +5,7 @@ include('includes/header.html');
 include('includes/left_menu.html');
 $userid = $_POST['userid'];
 $roleid = $_POST['roleid'];
+$track_type = $_POST['track_type'];
 if($track_type == ''){
 	echo "Track Type is Empty";
 	exit();

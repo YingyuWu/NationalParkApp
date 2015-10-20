@@ -74,12 +74,13 @@ function init(){
   var role_id = <?php echo json_encode($roleid); ?>;
   var track_type = <?php echo json_encode($track_type); ?>;
   var description = <?php echo json_encode($track_description ); ?>;
+  var track_name = <?php echo json_encode($track_name ); ?>;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
   document.getElementById("track-type").value = track_type;
   document.getElementById("header-user-id").value = user_id;
   document.getElementById("header-role-id").value = role_id;
-  document.getElementById("main-content").innerHTML = "<h1 class='description'><b>Description</b></h1>" + description;
+  document.getElementById("main-content").innerHTML = "<h1 class='description'>" + track_name + "</h1><p style='font-size:16px;color:blue' class='description'>" + description + "</p>";
   chartRender();
   //document.getElementById("main-content").style.backgroundImage = "url('images/ledgesWeathering_background.png')";
 }

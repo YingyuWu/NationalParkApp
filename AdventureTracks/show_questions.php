@@ -18,6 +18,21 @@ $question_type= $_GET['Type'];
 if($question_type == ''){
   $question_type = "text";
 }
+require_once('includes/db_conn.php');
+$query = "SELECT * FROM `AdventureTracks` WHERE ID='".$track_type."'";
+$result = $dbc->query($query);
+$track_name;
+    if(!$result){
+        echo '<h1>System Error</h1>';
+        exit();
+    }
+
+    if($result->num_rows > 0){
+    //Fetch rows
+        $row = $result->fetch_assoc();
+        $track_name = $row['Track_Name'];
+  }
+  $dbc->close();
 ?>
 
 <head>
@@ -29,6 +44,7 @@ if($question_type == ''){
 <div class="main"> 
 	<div class="left">
 	     <ul>
+       <li><a onclick="viewIntroduction(this)">Introduction</a></li>
        <li><a onclick="viewPoints(this)">Points</a></li>
        <li><a name="text" onclick="viewQuestions(this)">Text/Image Questions</a></li>
        <li><a name="fill" onclick="viewQuestions(this)">Fill In Questions</a></li>
@@ -37,6 +53,7 @@ if($question_type == ''){
        <li><a name="match" onclick="viewQuestions(this)">Match Questions</a></li>
        <li><a name="order" onclick="viewQuestions(this)">Correct Order Questions</a></li>
        <li><a name="fact" onclick="viewQuestions(this)">Information</a></li>
+       <li><a onclick="switchTracks(this)">Switch Tracks</a></li>
        </ul>
 	</div>
 	<div class="wrappermiddle">
@@ -123,12 +140,25 @@ function init(){
   var role_id = <?php echo json_encode($roleid); ?>;
   var track_type = <?php echo json_encode($track_type); ?>;
   var question_type = <?php echo json_encode($question_type); ?>;
+  var track_name = <?php echo json_encode($track_name); ?>;
+  document.getElementById("track-name").innerHTML = track_name;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
   document.getElementById("track-type").value = track_type;
   document.getElementById("header-user-id").value = user_id;
   document.getElementById("header-role-id").value = role_id;
   viewQuestions(question_type);
+}
+function switchTracks(ele){
+  var user_id = document.getElementById("user-id").value;
+  var role_id = document.getElementById("role-id").value;
+    window.location = "list.php?userID=" + user_id + "&roleID=" + role_id;
+}
+function viewIntroduction(ele){
+  var user_id = document.getElementById("user-id").value;
+  var role_id = document.getElementById("role-id").value;
+  var track_type = document.getElementById("track-type").value;
+    window.location = "main.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
 }
 </script>
 

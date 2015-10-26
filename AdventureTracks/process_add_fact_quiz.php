@@ -24,7 +24,19 @@ if($question == ''){
 }
 //connect to the database
 require_once('includes/db_conn.php');
+$query = "SELECT * FROM `AdventureTracks` WHERE ID='".$track_type."'";
+$result = $dbc->query($query);
+$track_name;
+    if(!$result){
+        echo '<h1>System Error</h1>';
+        exit();
+    }
 
+    if($result->num_rows > 0){
+    //Fetch rows
+        $row = $result->fetch_assoc();
+        $track_name = $row['Track_Name'];
+    }
 //Create the insert query
 $query = "INSERT INTO factInformation
 			(questionid, question,available, Locat_ID,image_url1,link, Question_Type, Track_Type)
@@ -51,6 +63,8 @@ include('includes/footer.html');
 var user_id = <?php echo json_encode($userid); ?>;
 var role_id = <?php echo json_encode($roleid); ?>;
 var track_type = <?php echo json_encode($track_type); ?>;
+var track_name = <?php echo json_encode($track_name); ?>;
+document.getElementById("track-name").innerHTML = track_name;
 document.getElementById("header-user-id").value = user_id;
 document.getElementById("header-role-id").value = role_id;
 
@@ -63,6 +77,9 @@ function viewQuestions(ele){
 function viewPoints(ele){
   var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
   window.location = url;
+}
+function switchTracks(ele){
+    window.location = "list.php?userID=" + user_id + "&roleID=" + role_id;
 }
 </script>
 

@@ -33,6 +33,19 @@ if($edit == 'edit'){
     $modified = 'Delete Information';
 }
 require_once('includes/db_conn.php');
+$query = "SELECT * FROM `AdventureTracks` WHERE ID='".$track_type."'";
+$result = $dbc->query($query);
+$track_name;
+    if(!$result){
+        echo '<h1>System Error</h1>';
+        exit();
+    }
+
+    if($result->num_rows > 0){
+    //Fetch rows
+        $row = $result->fetch_assoc();
+        $track_name = $row['Track_Name'];
+    }
 if($type == 'match'){
     $query = "SELECT * FROM `matchQuestions` WHERE questionid = '".$questionid."'";
     $result = $dbc->query($query);
@@ -59,6 +72,7 @@ if($type == 'match'){
     echo "Invalid Type";
     exit();
 }
+$dbc->close();
 ?>
 <?php include('includes/left_menu.html'); ?>
     <div class="wrappermiddle">
@@ -134,6 +148,8 @@ var user_id = <?php echo json_encode($userid); ?>;
 var role_id = <?php echo json_encode($roleid); ?>;
 var track_type = <?php echo json_encode($track_type); ?>;
 var locat_id = <?php echo json_encode($locatid); ?>;
+var track_name = <?php echo json_encode($track_name); ?>;
+document.getElementById("track-name").innerHTML = track_name;
 document.getElementById("header-user-id").value = user_id;
 document.getElementById("header-role-id").value = role_id;
 if(locat_id != '' && locat_id != undefined && locat_id != '0'){
@@ -173,6 +189,9 @@ function submitForm(){
     }else{
         self.form.submit();
     }
+}
+function switchTracks(ele){
+    window.location = "list.php?userID=" + user_id + "&roleID=" + role_id;
 }
 </script>
 <?php include('includes/footer.html'); ?>

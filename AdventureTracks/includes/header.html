@@ -31,9 +31,11 @@
         <!--    <a class="navbar-brand" href="#">POI Interpolation</a> -->
         </div>
         <div style="margin-left:-50px"class="navbar-collapse collapse">
-          <ul  style="height:100px;"class="nav navbar-nav" >
+        <label id="track-name" style="color:white; font-size:26px"></label>
+        <a onclick="switchTracks(this)">&nbsp;&nbsp;&nbsp;Switch tracks</a>
+          <!--<ul  style="height:100px;"class="nav navbar-nav" >
             <!--<li ><a style="color:white">Adventure Tracks</a></li>-->
-            <li id="1" class="active"><a name="1" style="background-image:url('images/ledgesWeathering.png');height:100px; width:200px"onclick="linkToMap(this)" ></a></li>
+            <!--<li id="1" class="active"><a name="1" style="background-image:url('images/ledgesWeathering.png');height:100px; width:200px"onclick="linkToMap(this)" ></a></li>
             <li id="2"><a  name="2" style="background-image:url('images/ledgesMicrohabitat.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
             <li id="3"><a  name="3" style="background-image:url('images/fallColor.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
             <li id="4"><a  style="background-image:url('images/coming.png');height:100px;width:200px"onclick="linkToMap(this)"></a></li>
@@ -46,7 +48,7 @@
             <li><a href="add_Order_quiz.php">Corret Order Question</a></li>
             <li><a href="show_questions.php">Questions Management</a></li>-->
 
-          </ul>
+          <!--</ul>-->
           <input type="hidden" id="header-user-id" value="empty">
           <input type="hidden" id="header-role-id" value="empty">
         </div><!--/.nav-collapse -->

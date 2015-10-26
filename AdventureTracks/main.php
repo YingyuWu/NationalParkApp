@@ -75,6 +75,7 @@ function init(){
   var track_type = <?php echo json_encode($track_type); ?>;
   var description = <?php echo json_encode($track_description ); ?>;
   var track_name = <?php echo json_encode($track_name ); ?>;
+  document.getElementById("track-name").innerHTML = track_name;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
   document.getElementById("track-type").value = track_type;
@@ -168,5 +169,17 @@ function viewQuestions(ele){
   var type = ele.name;
   var url = "show_questions.php?userID=" + userid + "&roleID=" + roleid + "&trackType=" + track_type + "&Type=" + type;
   window.location = url;
+}
+
+function switchTracks(ele){
+  var user_id = document.getElementById("user-id").value;
+  var role_id = document.getElementById("role-id").value;
+    window.location = "list.php?userID=" + user_id + "&roleID=" + role_id;
+}
+function viewIntroduction(ele){
+  var user_id = document.getElementById("user-id").value;
+  var role_id = document.getElementById("role-id").value;
+  var track_type = document.getElementById("track-type").value;
+    window.location = "main.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
 }
 </script>

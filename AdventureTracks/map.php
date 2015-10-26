@@ -14,6 +14,7 @@ html, body { height: 100%; }
 </style>
 <?php
 require_once('includes/db_conn.php');
+
 $userid = $_GET['userID'];
 if($userid == ''){
     echo "User ID is invalid";
@@ -29,6 +30,19 @@ if($track_type == ''){
     echo "track_type is invalid";
     exit();
 }
+$query = "SELECT * FROM `AdventureTracks` WHERE ID='".$track_type."'";
+$result = $dbc->query($query);
+$track_name;
+    if(!$result){
+        echo '<h1>System Error</h1>';
+        exit();
+    }
+
+    if($result->num_rows > 0){
+    //Fetch rows
+        $row = $result->fetch_assoc();
+        $track_name = $row['Track_Name'];
+  }
 $query = "SELECT * FROM `Location` INNER JOIN `AdventureTracksPoints` WHERE `AdventureTracksPoints`.Locat_ID=`Location`.ID AND `Location`.User_ID = '".$userid."' AND `AdventureTracksPoints`.Track_Type = '".$track_type."' AND `Location`.Pub_Or_Priva = '1' ORDER BY `Location`.ID";
 $result = $dbc->query($query);
 $count = 0;
@@ -58,6 +72,7 @@ if(count($lat) != count($lnt)){
   echo "<p>Locations loading error</p>";
   exit();
 }
+$dbc->close();
 ?>
 <script type="text/javascript"> 
 
@@ -91,6 +106,8 @@ function initialize() {
   user_id = <?php echo json_encode($userid); ?>;
   role_id = <?php echo json_encode($roleid); ?>;
   track_type = <?php echo json_encode($track_type); ?>;
+  var track_name = <?php echo json_encode($track_name); ?>;
+  document.getElementById("track-name").innerHTML = track_name;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
   document.getElementById("track-type").value = track_type;
@@ -339,6 +356,18 @@ function addQuestions(ele){
     return;
   }
   window.location = url;
+}
+
+function switchTracks(ele){
+  var user_id = document.getElementById("user-id").value;
+  var role_id = document.getElementById("role-id").value;
+    window.location = "list.php?userID=" + user_id + "&roleID=" + role_id;
+}
+function viewIntroduction(ele){
+  var user_id = document.getElementById("user-id").value;
+  var role_id = document.getElementById("role-id").value;
+  var track_type = document.getElementById("track-type").value;
+    window.location = "main.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
 }
   $(document).ready(function(){
     initialize();

@@ -21,7 +21,7 @@ include('includes/listtop.html');
 	if($result->num_rows > 0){
 	//Fetch rows
 		while($row = $result->fetch_assoc()){
-			echo "<div class='view'>
+			echo "<div class='view' id='".$row['ID']."' onclick='go(this)'>
 			<div class='view-back'>
 			<span style='color:white'data-icon=''><b>".$row['Track_Name']."</b></span>
 			<a href='main.php?userID=".$userid."&roleID=".$roleid."&trackType=".$row['ID']."'>&rarr;</a>
@@ -32,6 +32,15 @@ include('includes/listtop.html');
 	}
 include('includes/listbottom.html');		
 ?>
+<script type="text/javascript">
+function go(ele){
+	var user_id = <?php echo json_encode($userid); ?>;
+  	var role_id = <?php echo json_encode($roleid); ?>;
+  	var track_type = ele.id;
+	var url = "main.php?userID="+ user_id + "&roleID="+ role_id + "&trackType=" + track_type;
+	window.location = url;
+}
+</script>
 
 			
 

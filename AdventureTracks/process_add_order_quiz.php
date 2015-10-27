@@ -101,5 +101,8 @@ function viewPoints(ele){
   var url = "map.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
   window.location = url;
 }
+function viewIntroduction(ele){
+    window.location = "main.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
+}
 </script>
 

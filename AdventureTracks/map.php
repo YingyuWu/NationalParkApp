@@ -65,8 +65,6 @@ if($result->num_rows > 0){
             $descriptions[$count] = $row['Description'];
             $count++;   
         }
-}else{
-    echo "<p>No results matching</p>";
 }
 if(count($lat) != count($lnt)){
   echo "<p>Locations loading error</p>";

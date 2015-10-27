@@ -81,5 +81,8 @@ function viewPoints(ele){
 function switchTracks(ele){
     window.location = "list.php?userID=" + user_id + "&roleID=" + role_id;
 }
+function viewIntroduction(ele){
+    window.location = "main.php?userID=" + user_id + "&roleID=" + role_id + "&trackType=" + track_type;
+}
 </script>
 

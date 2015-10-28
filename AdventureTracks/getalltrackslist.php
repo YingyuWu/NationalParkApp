@@ -25,5 +25,9 @@ $result1 = $dbc->query($query);
 		
     }
 $obj->trackslist = $trackslist;
-echo json_encode($obj); 
+$json = json_encode($obj); 
+$json = str_replace('\r','',$json);
+$json = str_replace('\n','',$json);
+$json = str_replace('\/','/',$json);
+echo $json;
 ?>

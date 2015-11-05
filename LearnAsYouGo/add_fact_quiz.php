@@ -24,7 +24,7 @@ document.getElementById("header-role-id").value = role_id;
 </script>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
-        <h1>Add Text Questions</h1>
+        <h1>Add Information</h1>
         <form action="process_add_fact_quiz.php" method="post" id="form">
             <div class="form-group" style="padding-top:20px;">
                 <label for="question">Information</label>

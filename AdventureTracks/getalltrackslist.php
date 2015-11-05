@@ -15,10 +15,10 @@ $result1 = $dbc->query($query);
     // output data of each row
 	    while($row = $result1->fetch_assoc()) {
 	    		$rowobj = new stdClass();
-		        $rowobj->id = $row['ID'];
-		        $rowobj->title = $row['Track_Name'];
-		        $rowobj->description = $row['Description'];
-		        $rowobj->image = $row['Image_url'];
+		        $rowobj->trackID = $row['ID'];
+		        $rowobj->trackName = utf8_encode($row['Track_Name']);
+		        $rowobj->trackDescirption = utf8_encode($row['Description']);
+		        $rowobj->trackImage = utf8_encode($row['Image_url']);
 		        $trackslist[] = $rowobj;
 		        //$obj->trackpoints = $trackpoints;
 		} 

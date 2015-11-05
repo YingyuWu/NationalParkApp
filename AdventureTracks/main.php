@@ -15,6 +15,7 @@ if($track_type == ''){
   $track_type = 1;
 }
 require_once('includes/db_conn.php');
+mysql_query('SET CHARACTER SET utf8');
 $query2 = "SELECT * FROM `AdventureTracks` WHERE ID = '".$track_type."'";//Default Setting for index page
 $result = $dbc->query($query2);
 if(!$result){
@@ -25,7 +26,7 @@ if($result->num_rows > 0){
         //Fetch rows
         while($row = $result->fetch_assoc()){
             $track_name = $row['Track_Name'];
-            $track_description = $row['Description'];  
+            $track_description = utf8_encode($row['Description']);  
         }
 }
 $query1 = "SELECT count(*) FROM `Location` INNER JOIN `AdventureTracksPoints` WHERE `AdventureTracksPoints`.Locat_ID=`Location`.ID AND `Location`.User_ID = '".$userid."' AND `AdventureTracksPoints`.Track_Type = '".$track_type."' AND `Location`.Pub_Or_Priva = '1' ORDER BY `Location`.ID";
@@ -88,13 +89,48 @@ function init(){
 
 function chartRender(){
 var points=<?php echo json_encode($points); ?>;
+
 var num_text=<?php echo json_encode($num_text); ?>;
+
 var num_fill=<?php echo json_encode($num_fill); ?>;
+
 var num_single=<?php echo json_encode($num_single); ?>;
+
 var num_multi=<?php echo json_encode($num_multi); ?>;
+
 var num_match=<?php echo json_encode($num_match); ?>;
+
 var num_order=<?php echo json_encode($num_order); ?>;
+
 var num_fact=<?php echo json_encode($num_fact); ?>;
+if(points == '0' && num_text == points && num_fill == points && num_single == points && num_multi == points && num_match == points && num_order == points && num_fact == points){
+  var chart = new CanvasJS.Chart("chartContainer",
+  {
+    theme: "theme2",
+    title:{
+      text: "'Numbers in this track'"
+    },    
+    data: [
+    {       
+      type: "pie",
+      showInLegend: true,
+      toolTipContent: "0",
+      legendText: "{indexLabel}",
+      dataPoints: [
+        {  y: 1, indexLabel: "points" },
+        {  y: 1, indexLabel: "text/image questions" },
+        {  y: 1, indexLabel: "fill in questions" },
+        {  y: 1, indexLabel: "single choice questions"},
+        {  y: 1, indexLabel: "multiple choices questions" },
+        {  y: 1, indexLabel: "match questions"},
+        {  y: 1, indexLabel: "correct order questions"},
+        {  y: 1, indexLabel: "information"}
+      ]
+    }
+    ]
+  });
+  chart.render();
+}else{
   var chart = new CanvasJS.Chart("chartContainer",
   {
     theme: "theme2",
@@ -122,6 +158,10 @@ var num_fact=<?php echo json_encode($num_fact); ?>;
   });
   chart.render();
 }
+
+  
+  
+}
   
 </script>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -135,10 +175,10 @@ var num_fact=<?php echo json_encode($num_fact); ?>;
 <body onload="init()">
 <?php include('includes/left_menu.html'); ?>
 	<div class="wrappermiddle">
-		<div style="width:50%; float:left;border-right:1px solid grey" class="middle" id="main-content">
+		<div style="width:50%; float:left;border-right:1px solid grey; " class="middle" id="main-content">
 
 	</div>
-  <div style="width:50%;float:left" class="wow fadeIn" id="chartContainer">
+  <div style="width:50%;float:left;" class="wow fadeIn" id="chartContainer">
 
   </div>    
 	<!--<div class="right">

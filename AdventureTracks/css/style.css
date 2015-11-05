@@ -1,5 +1,5 @@
 .main{
-   width: 1300px;
+   width: 100%;
    margin-top:-30px;
 }
 .top{
@@ -28,7 +28,7 @@
 }
 .middle{
    float: left;
-   width:1300px;
+   width:100%;
   // background-color: white;
    height: 750px;
    padding-left:10px;

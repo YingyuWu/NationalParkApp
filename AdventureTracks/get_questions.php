@@ -52,8 +52,8 @@ $point = array();
 	    			$line = $r->fetch_assoc();
 	    			$point[0] = $line['Longitude'];
 	    			$point[1] = $line['Latitude'];
-	    			$point_title = $line['Title'];
-        			$point_description= $line['Description'];
+	    			$point_title = utf8_encode($line['Title']);
+        			$point_description= utf8_encode($line['Description']);
 	    		}
 		        $rowobj->coordinate = $point;
 		        $rowobj->title = $point_title;
@@ -84,8 +84,8 @@ $point = array();
 	    			$line = $r->fetch_assoc();
 	    			$point[0] = $line['Longitude'];
 	    			$point[1] = $line['Latitude'];
-	    			$point_title = $line['Title'];
-        			$point_description= $line['Description'];
+	    			$point_title = utf8_encode($line['Title']);
+        			$point_description= utf8_encode($line['Description']);
 	    		}
 		        $rowobj->coordinate = $point;
 		        $rowobj->title = $point_title;
@@ -117,8 +117,8 @@ $point = array();
 	    			$line = $r->fetch_assoc();
 	    			$point[0] = $line['Longitude'];
 	    			$point[1] = $line['Latitude'];
-	    			$point_title = $line['Title'];
-        			$point_description= $line['Description'];
+	    			$point_title = utf8_encode($line['Title']);
+        			$point_description= utf8_encode($line['Description']);
 	    		}
 		        $rowobj->coordinate = $point;
 		        $rowobj->title = $point_title;
@@ -151,8 +151,8 @@ $point = array();
 	    			$line = $r->fetch_assoc();
 	    			$point[0] = $line['Longitude'];
 	    			$point[1] = $line['Latitude'];
-	    			$point_title = $line['Title'];
-        			$point_description= $line['Description'];
+	    			$point_title = utf8_encode($line['Title']);
+        			$point_description= utf8_encode($line['Description']);
 	    		}
 		        $rowobj->coordinate = $point;
 		        $rowobj->title = $point_title;
@@ -186,8 +186,8 @@ $point = array();
 	    			$line = $r->fetch_assoc();
 	    			$point[0] = $line['Longitude'];
 	    			$point[1] = $line['Latitude'];
-	    			$point_title = $line['Title'];
-        			$point_description= $line['Description'];
+	    			$point_title = utf8_encode($line['Title']);
+        			$point_description= utf8_encode($line['Description']);
 	    		}
 		        $rowobj->coordinate = $point;
 		        $rowobj->title = $point_title;
@@ -219,8 +219,8 @@ $point = array();
 	    			$line = $r->fetch_assoc();
 	    			$point[0] = $line['Longitude'];
 	    			$point[1] = $line['Latitude'];
-	    			$point_title = $line['Title'];
-        			$point_description= $line['Description'];
+	    			$point_title = utf8_encode($line['Title']);
+        			$point_description= utf8_encode($line['Description']);
 	    		}
 		        $rowobj->coordinate = $point;
 		        $rowobj->title = $point_title;
@@ -254,8 +254,8 @@ $point = array();
 	    			$line = $r->fetch_assoc();
 	    			$point[0] = $line['Longitude'];
 	    			$point[1] = $line['Latitude'];
-	    			$point_title = $line['Title'];
-        			$point_description= $line['Description'];
+	    			$point_title = utf8_encode($line['Title']);
+        			$point_description= utf8_encode($line['Description']);
 	    		}
 		        $rowobj->coordinate = $point;
 		        $rowobj->title = $point_title;

@@ -3,7 +3,6 @@
 <head>
 <title>Responsive Image Grids Using CSS</title>
 <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <style type="text/css">
 * {
 	margin: 0;
@@ -114,14 +113,6 @@ ul.rig.columns-3 li {
 ul.rig.columns-4 li {
 	width: 22.5%; /* this value + 2.5 should = 25% */
 }
-a:hover {
-  cursor:pointer;
-  
- }
- a{
-	color:blue;
-	text-decoration: underline;
- }
 
 @media (max-width: 1199px) {
 	.container {
@@ -169,10 +160,7 @@ a:hover {
 
 <div class="wrapper">
 <h1 align="center" class="header">Adventure Tracks</h1>
-<div align="center" >
-<h4 id="header0" style="display:none">Please select a track to start OR <input type="button"  class = "listbtn" value="Add New Adventure Track" onclick="addTrack()"></h4>
-<h4 id="header1" style="display:none">Please select a track to start:</h4>
-</div>
+<div align="center" ><h4>Please select a track to start OR <input type="button"  class = "listbtn" value="Add New Adventure Track" onclick="addTrack()"></h4></div>
 	<div class="container" >
 		<div id="four-columns" class="grid-container" style="display:block">
 		<ul class="rig columns-4">

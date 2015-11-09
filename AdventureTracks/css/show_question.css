@@ -8,8 +8,9 @@ div, ul,li,a  {margin:0; padding:0;}
 	#content {width:90%; margin:0 auto;height:200px;background:#fff;border:1px solid;z-index:1;text-align:center;padding:0 0; overflow-y:auto; height:800px;}
 	#query_result { width: 100%;}
 	#query_result tr{border-bottom:1px solid black; border-top:1px solid black;}
-	#query_result td{border-left:1px solid black; width:25%;text-align:center;}
+	#query_result td{border-left:1px solid black; width:25%; border-bottom:1px solid black; text-align:center;}
 	#description_menu a{border:0px; color:blue;}
+	#main-content a{border:0px; color:blue;}
 
 
 	

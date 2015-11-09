@@ -1,6 +1,7 @@
 <?php
 require_once('includes/db_conn.php');
 $locat_ID = ($_POST['locatID']);
+$roleid = ($_POST['roleID']);
 if($locat_ID == ''){
     echo "locat_ID is invalid";
     exit();
@@ -76,7 +77,11 @@ $dbc->close();
 	 $menu_fact = '<b>7.Information('.$num_fact.')</b>&nbsp;&nbsp;&nbsp;<a name="fact" onclick="addQuestions(this);return false;">Add New</a><br/>';
  }
  $removePoint = '<br><a name='.$locat_ID.' id='.$location_type.' onclick="removePointToLearn(this)"><b> Remove Me From Learn As You Go</b></a></p>';
- 
-$question = "<p><b>Title: ".$title."</b></p>".$menu_text.$menu_fill.$menu_single.$menu_multi.$menu_match.$menu_order.$menu_fact.$removePoint;
+ if($roleid=='0'){
+ 	$question = "<p><b>Title: ".$title."</b></p>".$menu_text.$menu_fill.$menu_single.$menu_multi.$menu_match.$menu_order.$menu_fact;
+ }else{
+ 	$question = "<p><b>Title: ".$title."</b></p>".$menu_text.$menu_fill.$menu_single.$menu_multi.$menu_match.$menu_order.$menu_fact.$removePoint;
+ }
+
 echo $question;
 ?>

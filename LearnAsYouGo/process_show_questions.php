@@ -56,9 +56,9 @@ if($locat_ID == '' && $check == 'review'){
     echo "Location ID Error";
     //exit();
 }
-if($role_id == '0'){
+if($role_id == '1' || $role_id == '2'){
     $title = "<tr><td>Question ID</td><td>Question</td><td>Avalibility</td><td>Update</td></tr>";
-}else if($role_id == '1'){
+}else if($role_id == '0'){
     $title = "<tr><td style='width:20%'>Question ID</td><td style='width:80%'>Question</td></tr>";
 }else{
     echo "Role ID is invalid";
@@ -84,7 +84,7 @@ if($type == 'text'){
         //Fetch rows
         echo $title;
         while($row = $result->fetch_assoc()){
-            if($role_id == '0'){
+            if($role_id == '1' || $role_id == '2'){
                 $count++;
                 $check = $row['available'];
                 if($check ==  1){
@@ -101,7 +101,7 @@ if($type == 'text'){
                     echo "Available is Not Set";
                     exit();
                 } 
-            }else if($role_id == '1'){//regular user
+            }else if($role_id == '0'){//regular user
         	   echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
             }
         }
@@ -127,7 +127,7 @@ if($type == 'text'){
         //Fetch rows
         echo $title;
         while($row = $result->fetch_assoc()){
-            if($role_id == '0'){
+            if($role_id == '1' || $role_id == '2'){
                 $count++;
                 $check = $row['available'];
                 if($check ==  1){
@@ -144,7 +144,7 @@ if($type == 'text'){
                     echo "Available is Not Set";
                     exit();
                 } 
-            }else if($role_id == '1'){//regular user
+            }else if($role_id == '0'){//regular user
                echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
             }   
         }
@@ -170,7 +170,7 @@ if($type == 'text'){
         //Fetch rows
         echo $title;
         while($row = $result->fetch_assoc()){
-            if($role_id == '0'){
+            if($role_id == '1' || $role_id == '2'){
                 $count++;
                 $check = $row['available'];
                 if($check ==  1){
@@ -188,7 +188,7 @@ if($type == 'text'){
                     echo "Available is Not Set";
                     exit();
                 }  
-            }else if($role_id == '1'){//regular user
+            }else if($role_id == '0'){//regular user
                echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
             } 
             
@@ -216,7 +216,7 @@ if($type == 'text'){
         //Fetch rows
         echo $title;
         while($row = $result->fetch_assoc()){
-            if($role_id == '0'){
+            if($role_id == '1' || $role_id == '2'){
                 $count++;
                 $check = $row['available'];
                 if($check ==  1){
@@ -234,7 +234,7 @@ if($type == 'text'){
                     echo "Available is Not Set";
                     exit();
                 }
-            }else if($role_id == '1'){//regular user
+            }else if($role_id == '0'){//regular user
                echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
             } 
         	   
@@ -260,7 +260,7 @@ if($type == 'text'){
         //Fetch rows
         echo $title;
         while($row = $result->fetch_assoc()){
-            if($role_id == '0'){
+            if($role_id == '1' || $role_id == '2'){
                 $count++;
                 $check = $row['available'];
                 if($check ==  1){
@@ -278,7 +278,7 @@ if($type == 'text'){
                     echo "Available is Not Set";
                     exit();
                 }
-            }else if($role_id == '1'){//regular user
+            }else if($role_id == '0'){//regular user
                echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
             } 
             
@@ -304,7 +304,7 @@ if($type == 'text'){
         //Fetch rows
         echo $title;
         while($row = $result->fetch_assoc()){
-            if($role_id == '0'){
+            if($role_id == '1' || $role_id == '2'){
                 $count++;
                 $check = $row['available'];
                 if($check ==  1){
@@ -322,7 +322,7 @@ if($type == 'text'){
                     echo "Available is Not Set";
                     exit();
                 }
-            }else if($role_id == '1'){//regular user
+            }else if($role_id == '0'){//regular user
                echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
             } 
             
@@ -348,7 +348,7 @@ if($type == 'text'){
         //Fetch rows
         echo $title;
         while($row = $result->fetch_assoc()){
-            if($role_id == '0'){
+            if($role_id == '1' || $role_id == '2'){
                 $count++;
                 $check = $row['available'];
                 if($check ==  1){
@@ -366,7 +366,7 @@ if($type == 'text'){
                     echo "Available is Not Set";
                     exit();
                 }
-            }else if($role_id == '1'){//regular user
+            }else if($role_id == '0'){//regular user
                echo "<tr><td style='width:20%'>".$row['questionid']."</td><td style='width:80%'>".$row['question']."</td></tr>";
             } 
             

@@ -43,7 +43,7 @@ $track_name;
         $row = $result->fetch_assoc();
         $track_name = $row['Track_Name'];
   }
-$query = "SELECT * FROM `Location`  WHERE (User_ID = '".$userid."' OR User_ID='1') AND `Location`.Pub_Or_Priva = '1'";
+$query = "SELECT * FROM `Location`  WHERE User_ID = '".$userid."' AND `Location`.Pub_Or_Priva = '1'";
 $result = $dbc->query($query);
 $count = 0;
 $lat = array();
@@ -108,7 +108,6 @@ $dbc->close();
   locationtypes = <?php echo json_encode($locationtypes); ?>;//array of location types for all points
   tracktypes = <?php echo json_encode($tracktypes); ?>;//array of trackstypes for all points
   var track_name = <?php echo json_encode($track_name); ?>;
-  document.getElementById("menu_points").style.backgroundColor = "#6F74B9";
   
 
 
@@ -122,12 +121,12 @@ $dbc->close();
  <?php include('includes/left_menu.html'); ?>
   <div class="wrappermiddle">
   <div style="margin-top:45px"><img src="images/adventurePoints.png">&nbsp;Current Track Points&nbsp;&nbsp;&nbsp;<img src="images/generalPoints.png">&nbsp;Information Points&nbsp;&nbsp;<img src="images/learnPoints.png">&nbsp;Learn As You Go Points&nbsp;&nbsp;<img src="images/notincurrenttrackPoints.png">&nbsp;Not Current Track Points</div>
-    <div class="middle" id="main-content" style="border:1px solid black">
+    <div class="middle" id="main-content">
          <!-- you can use tables or divs for the overall layout --> 
-     <div style="width:100%; height:700px;">
-             <div id="map_canvas" style="width: 32%; height: 100%;float:left;border-right: 1px solid black;"></div> 
-            <div id="side_bar" style="width:31%; height:100%; float:left; overflow-y:auto; border-right: 1px solid black;"></div> 
-            <div id="right_bar" style=" height:100%; overflow-y:auto; "></div> 
+     <div style="width:100%; height:700px;border: 1px solid black;margin-right:10%">
+             <div id="map_canvas" style="width: 33%; height: 100%;float:left;border-right: 1px solid black;"></div> 
+            <div id="side_bar" style="width:33%; height:100%; float:left; overflow-y:auto; border-right: 1px solid black;"></div> 
+            <div id="right_bar" style="width:33%; height:100%; overflow-y:auto; "></div> 
       </div>
       <br>
       <div style="margin:0 auto; width:100%;">

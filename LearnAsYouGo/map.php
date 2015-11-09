@@ -34,7 +34,7 @@ if($roleid == ''){
     echo "Role ID is invalid";
     exit();
 }
-$query = "SELECT * FROM `Location` WHERE User_ID = '".$userid."' AND Pub_Or_Priva = '1'";//AND (Location_type = '0' OR Location_type = '3')
+$query = "SELECT * FROM `Location` WHERE (User_ID = '".$userid."' OR User_ID='1') AND Pub_Or_Priva = '1'";//AND (Location_type = '0' OR Location_type = '3')
 $result = $dbc->query($query);
 $count = 0;
 $lat = array();
@@ -84,7 +84,7 @@ $dbc->close();
   var role_id = <?php echo json_encode($roleid); ?>;
   var location_type = <?php echo json_encode($location_type); ?>;
   var title = <?php echo json_encode($title); ?>;
-
+document.getElementById("menu_map").style.backgroundColor = "#6F74B9";
 </script> 
 <script src="js/map.js"></script>
   </head> 
@@ -92,9 +92,10 @@ $dbc->close();
 
 
 <body style="margin-top:100px; margin-left:100px; padding:0px;" > 
- 
+ <div><img src="images/learnPoints.png">&nbsp;Learn As You Go Points&nbsp;&nbsp;&nbsp;<img src="images/generalPoints.png">&nbsp;Information Points&nbsp;&nbsp;<img src="images/adventurePoints.png">&nbsp;Adventure Tracks Points</div>
     <!-- you can use tables or divs for the overall layout --> 
    <div style="width:100%; height:700px;margin:0 auto;border: 2px solid black;">
+   
            <div id="map_canvas" style="width: 50%; height: 100%;float:left;border-right: 1px solid black;"></div> 
           <div id="side_bar" style="width:50%; height:100%; overflow-y:auto; "></div> 
     </div>

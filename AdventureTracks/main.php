@@ -76,6 +76,7 @@ function init(){
   var track_type = <?php echo json_encode($track_type); ?>;
   var description = <?php echo json_encode($track_description ); ?>;
   var track_name = <?php echo json_encode($track_name ); ?>;
+   document.getElementById("menu_intro").style.backgroundColor = "#6F74B9";
   document.getElementById("track-name").innerHTML = track_name;
   document.getElementById("user-id").value = user_id;
   document.getElementById("role-id").value = role_id;
@@ -174,7 +175,7 @@ if(points == '0' && num_text == points && num_fill == points && num_single == po
 </head>
 <body onload="init()">
 <?php include('includes/left_menu.html'); ?>
-	<div class="wrappermiddle">
+	<div style="width:80%" class="wrappermiddle">
 		<div style="width:50%; float:left;border-right:1px solid grey; " class="middle" id="main-content">
 
 	</div>

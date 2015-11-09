@@ -1,8 +1,12 @@
-var correctPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FD2f1D",
+var adventurePointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FD2f1D",
     new google.maps.Size(31, 44));
-var incorrectPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|848484",
+var learnPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2ECCFA",
     new google.maps.Size(21, 34));
-
+var generalPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FAAC58",
+    new google.maps.Size(21, 34));
+var notincurrenttrackPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2EFE9A",
+    new google.maps.Size(21, 34));
+var side_content = "<h2 style='padding-left:10px;'>List Of Points</h2>";
 function initialize() {
   // create the map
   document.getElementById("track-name").innerHTML = track_name;
@@ -12,12 +16,12 @@ function initialize() {
   document.getElementById("header-user-id").value = user_id;
   document.getElementById("header-role-id").value = role_id;
 var question="";
-
+side_content = "<h2 style='padding-left:10px;'>List Of Points</h2>";
 
 
   if(lats.length == 0){
     var myOptions = {
-    zoom: 17,
+    zoom: 12,
     center: new google.maps.LatLng(41.221030,-81.519655),
     mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
@@ -88,25 +92,31 @@ function filterClick(i) {
 }
 
 // A function to create the marker and set up the event window function 
-function createMarker(latlng, name, title, tracktype,locationtype) {
+function createMarker(latlng, locatid, title, tracktype,locationtype) {
   var pinImage;
-  
-  if(locationtype == '0' || locationtype == '2'){
-    pinImage = incorrectPointsIcon;
+  var listImage;
+  if(locationtype == '0'){
+	  pinImage = generalPointsIcon;
+	  listImage = "images/generalPoints.png";
+  }else if(locationtype == '2'){
+    pinImage = learnPointsIcon;
+	listImage = "images/learnPoints.png";
   }else if(locationtype == '1' || locationtype == '3'){
     var types = tracktype.split(";");//one point can be in multiple tracks
     var index = types.indexOf(track_type);
     if(index == '-1'){//not this track's point
-    pinImage = incorrectPointsIcon;
+		pinImage = notincurrenttrackPointsIcon;
+		listImage = "images/notincurrenttrackPoints.png";
     }else{//is this track's point
-      pinImage = correctPointsIcon;
+      pinImage = adventurePointsIcon;
+	  listImage = "images/adventurePoints.png";
     }
   }
-  
+  side_content += "&nbsp;&nbsp;<img src='" + listImage + "' >Point:&nbsp;<a class='wraplink' name='"+ locatid +"' onclick='viewPointDescription(this)'><b>"  + locatid  + " " + title + "</b></a><br>"; 
     var marker = new google.maps.Marker({
         position: latlng,
         map: map,
-        id:name,
+        id:locatid,
         icon: pinImage,
 		//draggable:true,
         zIndex: Math.round(latlng.lat()*-100000)<<5
@@ -115,36 +125,59 @@ function createMarker(latlng, name, title, tracktype,locationtype) {
     google.maps.event.addListener(marker, 'click', function() {
         document.getElementById("locat-id").value = marker.id;
         viewDescription(marker.id);
-        if(locationtype == '0' || locationtype == '2'){//general or learn as you go points only
-          infowindow.setContent("<p><b>Title: "+ title + "</b><br><a name='" + marker.id + "' id='" + locationtype + "' onclick='addPointToTrack(this)'><b>Add Me To This Track!</b></a></p>");
-        }else if(locationtype == '1' || locationtype == '3'){
-          var types = tracktype.split(";");//one point can be in multiple tracks
-          var index = types.indexOf(track_type);
-          if(index == '-1'){//not this track's point
-            infowindow.setContent("<p><b>Title: "+ title + "</b><br><a name='" + marker.id + "' id='" + locationtype + "' onclick='addPointToTrack(this)'><b>Add Me To This Track!</b></a></p>");
-          }else{//is this track's point
-              $.ajax({ url: 'countQuestions.php',
-                 data: {locatID: marker.id, userID:user_id, roleID:role_id, trackType:track_type, locationType: locationtype},
-                 type: 'post',
-                 success: function(output) {
-                      infowindow.setContent(output);
-                  }
-            });
-          }
-        }
+		if(role_id == '1' || role_id == '2'){//admin or citizen
+			if(locationtype == '0' || locationtype == '2'){//general or learn as you go points only
+			infowindow.setContent("<p><b>Title: "+ title + "</b><br><a class='wraplink' name='" + marker.id + "' id='" + locationtype + "' onclick='addPointToTrack(this)'><b>Add Me To This Track!</b></a></p>");
+			}else if(locationtype == '1' || locationtype == '3'){
+			  var types = tracktype.split(";");//one point can be in multiple tracks
+			  var index = types.indexOf(track_type);
+			  if(index == '-1'){//not this track's point
+				infowindow.setContent("<p><b>Title: "+ title + "</b><br><a class='wraplink' name='" + marker.id + "' id='" + locationtype + "' onclick='addPointToTrack(this)'><b>Add Me To This Track!</b></a></p>");
+			  }else{//is this track's point
+				
+				  $.ajax({ url: 'countQuestions.php',
+					 data: {locatID: marker.id, userID:user_id, roleID:role_id, trackType:track_type, locationType: locationtype},
+					 type: 'post',
+					 success: function(output) {
+						  infowindow.setContent(output);
+					  }
+				});
+			  }
+			}
+			infowindow.open(map,marker);  
+		}else{//normal user
+			if(locationtype == '1' || locationtype == '3'){
+			  var types = tracktype.split(";");//one point can be in multiple tracks
+			  var index = types.indexOf(track_type);
+			  if(index == '-1'){//not this track's point
+				//do nothing
+			  }else{//is this track's point
+				  $.ajax({ url: 'countQuestions.php',
+					 data: {locatID: marker.id, userID:user_id, roleID:role_id, trackType:track_type, locationType: locationtype},
+					 type: 'post',
+					 success: function(output) {
+						  infowindow.setContent(output);
+					  }
+				});
+				infowindow.open(map,marker);  
+			  }
+			}
+			
+		}
+        
 		
-        infowindow.open(map,marker);        
+              
         });
 		//google.maps.event.addListener(marker, 'dragend', function (event) {
 			//infowindow.setContent("<p>Point ID: " + marker.id + "<br>" + this.getPosition().lat() + " , " + this.getPosition().lng() + "</p><p><h4>Are you sure to move? </h4><a id='" + marker.id + "' onclick='updateLocation(this)'><b >Yes</b></a>&nbsp;&nbsp;&nbsp;<a><b onclick='resetLocation()'>No</b></a></p>"); 
 			//infowindow.open(map,marker);
 		//});
     gmarkers.push(marker);
-  
-    var side_content = "<h2 style='padding-left:10px;'>List Of Points</h2>";
-    titles.forEach(function(des,i){
-        side_content += "&nbsp;&nbsp;<a name='"+ locat_id[i] +"' onclick='viewPointDescription(this)'><b>"  + des + "</b></a><br>"; 
-    })
+	
+    
+    //titles.forEach(function(des,i){
+        //side_content += "&nbsp;&nbsp;<img src='" + listImage + "' >Point:&nbsp;<a name='"+ locat_id[i] +"' onclick='viewPointDescription(this)'><b>"  + locat_id[i]  + " " + des + "</b></a><br>"; 
+    //})
     side_bar_html = side_content;
     right_bar_html = "<p>&nbsp;&nbsp;Click on points to view description!</p>";
 
@@ -158,15 +191,15 @@ function createMarker(latlng, name, title, tracktype,locationtype) {
 		title:"Drag Me!"
         });
 		var track_type = document.getElementById("track-type").value;
-		infowindow.setContent("<p>" + latlng.lat() + " , " + latlng.lng() + "</p><p><a href='add_marker.php?trackType=" + track_type + "&userID="+user_id+"&roleID="+role_id+"&lng=" + latlng.lng() + "&lat=" + latlng.lat() + "'><b>Add Me To The Map!</b></a></p>"); 
+		infowindow.setContent("<p>" + latlng.lat() + " , " + latlng.lng() + "</p><p><a class='wraplink' href='add_marker.php?trackType=" + track_type + "&userID="+user_id+"&roleID="+role_id+"&lng=" + latlng.lng() + "&lat=" + latlng.lat() + "'><b>Add Me To The Map!</b></a></p>"); 
         infowindow.open(map,marker); 
 		google.maps.event.addListener(marker, 'click', function(event) {
-        infowindow.setContent("<p>" + this.getPosition().lat() + " , " + this.getPosition().lng() + "</p><p><a href='add_marker.php?trackType=" + track_type + "&userID="+user_id+"&roleID="+role_id+"&lng=" +  this.getPosition().lng() + "&lat=" + this.getPosition().lat() + "'><b'>Add Me To The Map!</b></a></p>"); 
+        infowindow.setContent("<p>" + this.getPosition().lat() + " , " + this.getPosition().lng() + "</p><p><a class='wraplink' href='add_marker.php?trackType=" + track_type + "&userID="+user_id+"&roleID="+role_id+"&lng=" +  this.getPosition().lng() + "&lat=" + this.getPosition().lat() + "'><b'>Add Me To The Map!</b></a></p>"); 
         infowindow.open(map,marker);        
         //side_bar_html = "<p> Lat: " + marker.position.G + " Lnt: " + marker.position.K + "</p> <br>";
         });
 		google.maps.event.addListener(marker, 'dragend', function (event) {
-			infowindow.setContent("<p>" + this.getPosition().lat() + " , " + this.getPosition().lng() + "</p><p><a href='add_marker.php?trackType=" + track_type + "&userID="+user_id+"&roleID="+role_id+"&lng=" +  this.getPosition().lng() + "&lat=" + this.getPosition().lat() + "'><b>Add Me To The Map!</b></a></p>"); 
+			infowindow.setContent("<p>" + this.getPosition().lat() + " , " + this.getPosition().lng() + "</p><p><a class='wraplink' href='add_marker.php?trackType=" + track_type + "&userID="+user_id+"&roleID="+role_id+"&lng=" +  this.getPosition().lng() + "&lat=" + this.getPosition().lat() + "'><b>Add Me To The Map!</b></a></p>"); 
 			infowindow.open(map,marker);
 		});
     gmarkers.push(marker);

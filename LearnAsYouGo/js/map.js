@@ -1,6 +1,8 @@
-var correctPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FD2f1D",
+var learnPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FD2f1D",
     new google.maps.Size(31, 44));
-var incorrectPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|848484",
+var adventurePointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|2ECCFA",
+    new google.maps.Size(21, 34));
+var generalPointsIcon = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|FAAC58",
     new google.maps.Size(21, 34));
 
 
@@ -14,7 +16,7 @@ function initialize() {
 
 
   var myOptions = {
-    zoom: 10,
+    zoom: 11,
     center: new google.maps.LatLng(lats[0],lnts[0]),
     mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
@@ -75,10 +77,12 @@ function filterClick(i) {
 // A function to create the marker and set up the event window function 
 function createMarker(latlng, name, title, location_type) {
 	var pinImage;
-	if(location_type == '1' || location_type == '0'){//not learn as you go point
-		pinImage = incorrectPointsIcon;
+	if(location_type == '1'){//information/ general points
+		pinImage = adventurePointsIcon;
+	}else if(location_type == '0' ){//adventure check points
+		pinImage = generalPointsIcon;
 	}else if(location_type == '2' || location_type == '3'){//is learn as you go point
-		pinImage = correctPointsIcon;
+		pinImage = learnPointsIcon;
 	}
     //var contentString = html;
     var marker = new google.maps.Marker({
@@ -94,22 +98,41 @@ function createMarker(latlng, name, title, location_type) {
 		 
         document.getElementById("locat-id").value = marker.id;
         viewDescription(marker.id);
-		if(location_type == '1' || location_type == '0'){//not learn as you go point
-			infowindow.setContent("<p><b>Title: "+ title + "</b><br><a name='" + marker.id + "' id='" + location_type + "' onclick='addPointToLearn(this)'><b>Add Me To Learn As You Go!</b></a></p>");
-		}else if(location_type == '2' || location_type == '3'){//is learn as you go point
-			$.ajax({ url: 'countQuestions.php',
-               data: {locatID: marker.id, locationType: location_type},
-               type: 'post',
-               success: function(output) {
-                    infowindow.setContent(output);
-                }
-          });
-		}
+        if(role_id == '1' || role_id == '2'){//admin or citizen
+          if(location_type == '1' || location_type == '0'){//not learn as you go point
+            infowindow.setContent("<p><b>Title: "+ title + "</b><br><a name='" + marker.id + "' id='" + location_type + "' onclick='addPointToLearn(this)'><b>Add Me To Learn As You Go!</b></a></p>");
+          }else if(location_type == '2' || location_type == '3'){//is learn as you go point
+              $.ajax({ url: 'countQuestions.php',
+                       data: {locatID: marker.id, locationType: location_type, roleID:role_id},
+                       type: 'post',
+                       success: function(output) {
+                            infowindow.setContent(output);
+                        }
+                  });
+          }
+          infowindow.open(map,marker);
+        }else{//normal user
+            if(location_type == '1' || location_type == '0'){//not learn as you go point
+              //do nothing
+          }else if(location_type == '2' || location_type == '3'){//is learn as you go point
+              $.ajax({ url: 'countQuestions.php',
+                       data: {locatID: marker.id, locationType: location_type, roleID:role_id},
+                       type: 'post',
+                       success: function(output) {
+                            infowindow.setContent(output);
+                        }
+                  });
+              infowindow.open(map,marker);
+          }
+
+        }
+		
+		
 		
         //contentString = html;
         //contentString = contentString;
         //infowindow.setContent("<p>Location ID:" + marker.id + "</p>"+contentString); 
-        infowindow.open(map,marker);        
+                
         //side_bar_html = "<p> Lat: " + marker.position.G + " Lnt: " + marker.position.K + "</p> <br>";
         });
 		/*google.maps.event.addListener(marker, 'dragend', function (event) {

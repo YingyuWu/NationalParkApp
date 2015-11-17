@@ -44,9 +44,10 @@ $query = "INSERT INTO factInformation
 $result = $dbc->query($query);
 
 if($result){
-    echo "<div class='wrappermiddle'>
+    echo "<script type='text/javascript'>alert('Insert Successfully!'); window.history.go(-2);</script>";
+	    /*echo "<div class='wrappermiddle'>
         <div class='middle' id='main-content'>Information has been saved<br><a href='main.php?userID=".$userid."&roleID=".$roleid."&trackType=".$track_type."'>Go Back</a>
-        </div></div>";
+        </div></div>";*/
 } else {
     echo '<h1>System Error</h1>';
 }

@@ -48,7 +48,7 @@ $dbc->close();
 		<li><a href="javascript:void(0);" id="match">Match Question</a></li>
 		<li><a href="javascript:void(0);" id="fact">Information</a></li>
 	</ul>
-	<input id="questionButton" name="text" class="listbtn" style="float:right;font-size: 15px; padding: 5px 5px 5px 5px;" type="button" value="Add Text/Image Question" onclick="addQuestions(this)">
+	<input id="questionButton" name="text" class="listbtn" style="float:right;font-size: 15px; padding: 5px 5px 5px 5px;display:none" type="button" value="Add Text/Image Question" onclick="addQuestions(this)">
 	<div class="clear"></div>
 </div>
 <div id="content">
@@ -67,6 +67,9 @@ document.getElementById("menu_questions").style.backgroundColor = "#6F74B9";
 document.getElementById("track-name").innerHTML = track_name;
 document.getElementById("header-user-id").value = user_id;
 document.getElementById("header-role-id").value = role_id; 
+if(role_id != '0'){
+	document.getElementById("questionButton").style.display = "inline";
+}
 
 function viewQuestions(ele){
   var type = ele.name;

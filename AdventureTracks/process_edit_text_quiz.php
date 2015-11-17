@@ -49,9 +49,10 @@ if($modified == 'edit'){
 	$result = $dbc->query($query_update);
 
 	if($result){
-	    echo "<div class='wrappermiddle'>
+	    echo "<script type='text/javascript'>alert('Edit Successfully!'); window.history.go(-2);</script>";
+	    /*echo "<div class='wrappermiddle'>
         <div class='middle' id='main-content'>Information has been saved<br><a href='main.php?userID=".$userid."&roleID=".$roleid."&trackType=".$track_type."'>Go Back</a>
-        </div></div>";
+        </div></div>";*/
 	} else {
 	    echo '<h1>System Error</h1>';
 	}
@@ -60,9 +61,10 @@ if($modified == 'edit'){
 	$result = $dbc->query($query_delete);
 
 	if($result){
-	    echo "<div class='wrappermiddle'>
+	    echo "<script type='text/javascript'>alert('Delete Successfully!'); window.history.go(-2);</script>";
+	    /*echo "<div class='wrappermiddle'>
         <div class='middle' id='main-content'>Information has been saved<br><a href='main.php?userID=".$userid."&roleID=".$roleid."&trackType=".$track_type."'>Go Back</a>
-        </div></div>";
+        </div></div>";*/
 	} else {
 	    echo '<h1>System Error</h1>';
 	}

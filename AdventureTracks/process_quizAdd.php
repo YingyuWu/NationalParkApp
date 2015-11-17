@@ -36,9 +36,10 @@ $query = "INSERT INTO questions
 			 VALUES (NULL, '".$question."','".$correct_answer."','1', '".$locatid."','".$image1."','".$link."','1','".$track_type."')";
 $result = $dbc->query($query);
 if($result){
-    echo "<div class='wrappermiddle'>
+    echo "<script type='text/javascript'>alert('Insert Successfully!'); window.history.go(-2);</script>";
+	    /*echo "<div class='wrappermiddle'>
         <div class='middle' id='main-content'>Information has been saved<br><a href='main.php?userID=".$userid."&roleID=".$roleid."&trackType=".$track_type."'>Go Back</a>
-        </div></div>";
+        </div></div>";*/
 } else {
     echo '<h1>System Error</h1>';
 }
